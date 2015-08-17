@@ -1,0 +1,22 @@
+-main ApplicationMain 
+-cp D:/HaxeToolkit/haxe/lib/HaxePunk/2,5,6
+-D HaxePunk=2.5.6
+-cp D:/HaxeToolkit/haxe/lib/openfl/3,3,0
+-D openfl=3.3.0
+-cp D:/HaxeToolkit/haxe/lib/lime/2,5,3
+-D lime=2.5.3
+-cp src
+-D native-trace
+-D openfl-next
+-D tools=2.5.3
+-D flash-use-stage
+-D no-compilation
+-D openfl-flash
+-D fdb
+-D web
+-swf-lib bin/flash/obj/assets.swf
+-swf-version 11.2
+-swf bin/flash/bin/Main.swf
+-swf-header 800:600:60:333333
+-cp bin/flash/haxe
+-debug
