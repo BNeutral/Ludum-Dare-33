@@ -7,11 +7,13 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
+import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.util.FlxPoint;
 import spriteExtension.SwapBG;
 import spriteExtension.SwapInterface;
+import spriteExtension.SwapSprite;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -42,14 +44,26 @@ class PlayState extends FlxState
 		var player : Player = new Player(100, 400);
 		addSwappable(player);
 		
-		var text : FlxText = new FlxText(0, 0, FlxG.width, "Press numerals to switch styles");
+		var enemy : SwapSprite = new SwapSprite(450, 210, ["assets/images/enemy.png", "assets/images/enemy_sketch.png"]);
+		addSwappable(enemy);
+		FlxTween.tween(enemy.scale, { y : 0.9 }, 0.5, { type : FlxTween.LOOPING } );
+		FlxTween.tween(enemy, { y : 210+(319*0.1) }, 0.5, { type : FlxTween.LOOPING } );
+		
+		
+		//TODO: Proper health
+		var health : SwapSprite = new SwapSprite(0, 0, ["assets/images/pickle.png", "assets/images/pickle_sketch.png"]);
+		health.scrollFactor.x = 0;
+		health.scrollFactor.y = 0;
+		addSwappable(health);
+		
+		var text : FlxText = new FlxText(0, 0, FlxG.width, "Press 1 / 2 to switch styles");
 		text.color = 0xFF000000;
 		text.alignment = "center";
 		text.size = 32;
 		text.scrollFactor.x = 0;
 		add(text);
 		
-		FlxG.camera.follow(player, FlxCamera.STYLE_PLATFORMER, new FlxPoint(0, 700));
+		FlxG.camera.follow(player, FlxCamera.STYLE_PLATFORMER, new FlxPoint(-200, 700));
 	}
 	
 	/**
