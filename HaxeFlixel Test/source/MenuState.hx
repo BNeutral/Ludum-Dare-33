@@ -18,7 +18,6 @@ class MenuState extends FlxState
 	override public function create():Void
 	{
 		super.create();
-		add(new FlxText(0, 0, 0, "Test", 32));
 	}
 	
 	/**
@@ -36,5 +35,6 @@ class MenuState extends FlxState
 	override public function update():Void
 	{
 		super.update();
+		FlxG.switchState(new PlayState());
 	}	
 }
