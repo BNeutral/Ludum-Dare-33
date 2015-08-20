@@ -16,14 +16,15 @@ class RASprite extends SwapSprite
 		
 	}
 	
+	//This works but its really hack-y.
+	//A smarter solution would involve knowing how far it is from one edge to another.
 	override public function update():Void
 	{
 		super.update();
 		
-		//if (this.isOnScreen() == false)
+		if (this.isOnScreen() == false)
 		{
-			this.x = 250; 
-			this.y = 110;
+			this.setPosition(x + 1300, y);
 		}
 	}
 	

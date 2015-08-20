@@ -50,7 +50,7 @@ class PlayState extends FlxState
 		FlxTween.tween(enemy.scale, { y : 0.9 }, 0.5, { type : FlxTween.LOOPING } );
 		FlxTween.tween(enemy, { y : 210 + (319 * 0.1) }, 0.5, { type : FlxTween.LOOPING } );
 		
-		var adoringFan : RASprite = new RASprite(250, 110, ["assets/images/enemy.png", "assets/images/enemy_sketch.png"]);
+		var adoringFan : RASprite = new RASprite(100, 100, ["assets/images/enemy.png", "assets/images/enemy_sketch.png"]);
 		addSwappable(adoringFan);
 		
 		
