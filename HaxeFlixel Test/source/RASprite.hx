@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import spriteExtension.SwapSprite;
 
@@ -17,14 +18,15 @@ class RASprite extends SwapSprite
 	}
 	
 	//This works but its really hack-y.
-	//A smarter solution would involve knowing how far it is from one edge to another.
+	//This is a smarter solution than the last one but I still need a way to compare the cameras x to this's x.
+	//To avoid the walking backwards problem.
 	override public function update():Void
 	{
 		super.update();
 		
 		if (this.isOnScreen() == false)
 		{
-			this.setPosition(x + 1300, y);
+			this.setPosition((x + FlxG.camera.width + 199), y);
 		}
 	}
 	
