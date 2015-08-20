@@ -14,6 +14,7 @@ import flixel.util.FlxPoint;
 import spriteExtension.SwapBG;
 import spriteExtension.SwapInterface;
 import spriteExtension.SwapSprite;
+import RASprite;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -47,7 +48,10 @@ class PlayState extends FlxState
 		var enemy : SwapSprite = new SwapSprite(450, 210, ["assets/images/enemy.png", "assets/images/enemy_sketch.png"]);
 		addSwappable(enemy);
 		FlxTween.tween(enemy.scale, { y : 0.9 }, 0.5, { type : FlxTween.LOOPING } );
-		FlxTween.tween(enemy, { y : 210+(319*0.1) }, 0.5, { type : FlxTween.LOOPING } );
+		FlxTween.tween(enemy, { y : 210 + (319 * 0.1) }, 0.5, { type : FlxTween.LOOPING } );
+		
+		var adoringFan : RASprite = new RASprite(250, 110, ["assets/images/enemy.png", "assets/images/enemy_sketch.png"]);
+		addSwappable(adoringFan);
 		
 		
 		//TODO: Proper health
