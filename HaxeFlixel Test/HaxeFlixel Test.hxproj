@@ -2,23 +2,23 @@
 <project version="2">
   <!-- Output SWF options -->
   <output>
-    <movie outputType="CustomBuild" />
+    <movie outputType="Application" />
     <movie input="" />
     <movie path="Project.xml" />
     <movie fps="60" />
     <movie width="800" />
     <movie height="600" />
-    <movie version="1" />
+    <movie version="3" />
     <movie minorVersion="0" />
-    <movie platform="Lime" />
+    <movie platform="NME" />
     <movie background="000000" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="C:\HaxeToolkit\haxe\lib\flixel-addons\1,1,0" />
-    <class path="C:\HaxeToolkit\haxe\lib\flixel\3,3,11" />
-    <class path="C:\HaxeToolkit\haxe\lib\lime\2,5,3" />
-    <class path="C:\HaxeToolkit\haxe\lib\openfl\3,3,0" />
+    <class path="D:\HaxeToolkit\haxe\lib\flixel-addons\1,1,0" />
+    <class path="D:\HaxeToolkit\haxe\lib\flixel\3,3,11" />
+    <class path="D:\HaxeToolkit\haxe\lib\lime\2,5,3" />
+    <class path="D:\HaxeToolkit\haxe\lib\openfl\3,3,0" />
     <class path="source" />
     <class path="export\flash\haxe" />
   </classpaths>
@@ -40,12 +40,16 @@
     <compile path="source\GameClass.hx" />
     <compile path="source\Main.hx" />
   </compileTargets>
+  <!-- Assets to embed into the output SWF -->
+  <library>
+    <!-- example: <asset path="..." id="..." update="..." glyphs="..." mode="..." place="..." sharepoint="..." /> -->
+  </library>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
     <hidden path="obj" />
   </hiddenPaths>
   <!-- Executed before build -->
-  <preBuildCommand>"$(CompilerPath)/haxelib" run lime build "$(OutputFile)" $(TargetBuild) -$(BuildConfig) -Dfdb</preBuildCommand>
+  <preBuildCommand />
   <!-- Executed after build -->
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->
