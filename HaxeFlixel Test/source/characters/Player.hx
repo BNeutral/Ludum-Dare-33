@@ -1,4 +1,4 @@
-package ;
+package characters ;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.tweens.FlxTween;
@@ -33,7 +33,6 @@ class Player extends SwapSprite
 			if (moveTween == null || !moveTween.active)
 			{
 				moveTween = FlxTween.angle(this, -30, 30, 1, {type : FlxTween.PINGPONG});
-				moveTween.type = FlxTween.PINGPONG;
 			}
 		}
 		if (FlxG.keys.pressed.RIGHT)

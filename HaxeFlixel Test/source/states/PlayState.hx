@@ -1,5 +1,6 @@
-package;
+package states;
 
+import characters.Player;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;

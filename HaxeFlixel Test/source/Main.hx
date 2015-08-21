@@ -8,6 +8,7 @@ import flash.Lib;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
+import states.MenuState;
 
 class Main extends Sprite 
 {
