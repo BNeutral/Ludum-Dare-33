@@ -11,6 +11,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
+import flixel.group.FlxTypedGroup;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
@@ -28,9 +29,9 @@ class PlayState extends FlxState
 
 	private var player : Player;
 	private var colliders : FlxGroup = new FlxGroup(); // These collide with the stage
-	private var edibles : FlxGroup = new FlxGroup(); // These can be eaten
-	private var items : FlxGroup = new FlxGroup(); // These can be eaten
-	private var playerItems : FlxGroup = new FlxGroup(); // These can be eaten
+	private var edibles : FlxTypedGroup<EdibleMob> = new FlxTypedGroup<EdibleMob>(); // These can be eaten
+	private var items : FlxTypedGroup<Item> = new FlxTypedGroup<Item> (); // These can be eaten
+	private var playerItems : FlxTypedGroup<Item>  = new FlxTypedGroup<Item> (); // These can be eaten
 	private var mapCollide : FlxTilemap;
 	
 	/**
@@ -88,8 +89,14 @@ class PlayState extends FlxState
 		FlxG.collide(mapCollide, colliders);
 		FlxG.collide(player, edibles, eatMob);
 		FlxG.collide(player, items, collideItem);
+		holdTest();
 	}	
 	
+	/**
+	 * Function called when the player collides by an item held by no monster
+	 * @param	obj1
+	 * @param	obj2
+	 */
 	private function collideItem(obj1 : Player, obj2 : Item) : Void
 	{
 		if (obj2.owner == null) 
@@ -101,6 +108,11 @@ class PlayState extends FlxState
 		}
 	}
 	
+	/**
+	 * Function called when a mob collides with the player
+	 * @param	obj1
+	 * @param	obj2
+	 */
 	private function eatMob(obj1 : Player, obj2 : EdibleMob) : Void
 	{
 		obj1.addMass(obj2.eatMass);
@@ -108,6 +120,20 @@ class PlayState extends FlxState
 		remove(obj2);
 		edibles.remove(obj2);
 		colliders.remove(obj2);
+	}
+	
+	private function holdTest() : Void
+	{
+		for (item in playerItems)
+		{
+			if (player.scale.x < item.detachThreshold)
+			{
+				player.detach(item);
+				colliders.add(item);
+				items.add(item);
+				playerItems.remove(item);
+			}
+		}
 	}
 
 }

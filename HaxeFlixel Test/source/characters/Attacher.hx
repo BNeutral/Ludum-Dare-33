@@ -21,4 +21,9 @@ class Attacher extends FlxSprite
 		item.attach(this);
 	}
 	
+	public function detach(item : Item)
+	{
+		item.detach();
+	}
+	
 }
