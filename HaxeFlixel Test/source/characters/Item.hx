@@ -37,7 +37,6 @@ class Item extends FlxSprite
 			acceleration.y = 0;
 			x = (owner.x - owner.offset.x + owner.width / 2) + radius * owner.scale.x * Math.cos(Util.toRadians(owner.angle+angleOffset));
 			y = (owner.y - owner.offset.y + owner.height / 2) + radius * owner.scale.y * Math.sin(Util.toRadians(owner.angle+angleOffset));
-			trace(owner.width / 2);
 		}
 		
 	}
