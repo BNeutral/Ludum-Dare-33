@@ -12,8 +12,9 @@ import flixel.util.FlxPoint;
  */
 class Player extends FlxSprite
 {
-	private var speedMultiplier : Int = 200;
-	private var jumpMultiplier : Int = 600;
+	private var baseSpeed : Float = 200;
+	private var speedMultiplier : Float = 200;
+	private var jumpMultiplier : Float = 600;
 	private var runThreshold : Float = 1;
 	private var gravityVector : FlxPoint = new FlxPoint(0, 0);
 	private var moveVector : FlxPoint = new FlxPoint(0, 0);
@@ -24,21 +25,46 @@ class Player extends FlxSprite
 	private var wasTouchingRight : Bool = false;
 	private var wasTouchingCeil : Bool = false;
 	
+	private var origWidth : Float;
+	private var origHeight : Float;
+	private var currentSize : Float = 1;
+	
 	public function new(x : Int, y : Int) 
 	{
 		super(x, y, "assets/images/player_placeholder.png");
 		drag.x = 700;
 		drag.y = 700;
 		angularDrag = 700;
-		
+		centerOrigin();
+		centerOffsets(true);
+		origWidth = width;
+		origHeight = height;
 	}
 	
 	override public function update():Void 
 	{
 		movementUpdate();
+		if (FlxG.keys.justPressed.ONE) adjustSize(currentSize += 0.1);
+		if (FlxG.keys.justPressed.TWO) adjustSize(currentSize -= 0.1);
+		speedMultiplier = baseSpeed / currentSize;
 		super.update();
 	}
 	
+	private function adjustSize(multiplier : Float)
+	{
+		scale.x = multiplier;
+		scale.y = multiplier;
+		var diffX : Float = (width - multiplier * origWidth);
+		var diffY : Float = (height - multiplier * origHeight);
+		offset.x += diffX/2;
+		offset.y += diffY/2;
+		x += diffX / 2;
+		y += diffY;		
+		width = multiplier * origWidth;
+		height = multiplier * origHeight;
+		
+	}
+		
 	private function movementUpdate() : Void
 	{
 		//var speed : Float = FlxMath.vectorLength(velocity.x, velocity.y);
@@ -138,11 +164,10 @@ class Player extends FlxSprite
 		
 		if (FlxG.keys.pressed.RIGHT || FlxG.keys.pressed.LEFT) 
 		{
-			angularVelocity = velocity.x + velocity.y;
-			if (wasTouchingRight) angularVelocity -= velocity.y * 2;
-			if (wasTouchingCeil) angularVelocity -= velocity.x * 2;
+			angularVelocity = (velocity.x + velocity.y)*(1/currentSize);
+			if (wasTouchingRight) angularVelocity -= velocity.y * 2 *(1/currentSize);
+			if (wasTouchingCeil) angularVelocity -= velocity.x * 2 *(1/currentSize);
 		}		
-		if (Math.abs(angularVelocity) < 0.1) angularVelocity = 0;
 			
 	}
 	
