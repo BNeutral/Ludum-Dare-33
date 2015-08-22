@@ -30,8 +30,9 @@ class MenuState extends FlxState
 	override public function create():Void
 	{
 		super.create();
-		addOption("NEW GAME", function(){ FlxG.switchState(new PlayState()); } );
-		addOption("CONTROLS", function(){ FlxG.switchState(new ControlsState()); } );
+		addOption("NEW GAME", function() { FlxG.switchState(new PlayState()); } );
+		addOption("LEVEL SELECT", function(){ FlxG.switchState(new LevelSelectState()); } );
+		//addOption("CONTROLS", function(){ FlxG.switchState(new ControlsState()); } );
 		addOption("CREDITS", function(){ FlxG.switchState(new CreditsState()); } );
 		updateCursorPos();
 		add(cursor);		
