@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="16" height="12" tilewidth="50" tileheight="50">
- <tileset firstgid="1" name="tileset_placeholder" tilewidth="50" tileheight="50">
-  <image source="../images/tileset_placeholder.png" width="100" height="100"/>
+<map version="1.0" orientation="orthogonal" width="20" height="15" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="TestTileset" tilewidth="40" tileheight="40">
+  <image source="../images/tileset_placeholder.png" width="80" height="80"/>
  </tileset>
- <layer name="Tile Layer 1" width="16" height="12">
+ <layer name="Tile Layer 1" width="20" height="15">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYKQQEwOwqaOnflxm0lI/IbNH9VNHPyUYAFxwAD0=
+   eJxjYmBgYKIyJgXgU08P8wi5n1L3ETKP1PAjx33k+g+XeaS4b9S8UfOoiQHSrwC7
   </data>
  </layer>
 </map>

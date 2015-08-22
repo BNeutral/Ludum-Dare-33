@@ -1,5 +1,7 @@
 package states;
 
+import characters.EdibleMob;
+import characters.Item;
 import characters.Player;
 import flixel.addons.editors.tiled.TiledMap;
 import flixel.FlxBasic;
@@ -14,6 +16,7 @@ import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
+import flixel.util.FlxCollision;
 import flixel.util.FlxMath;
 import flixel.util.FlxPoint;
 
@@ -23,7 +26,11 @@ import flixel.util.FlxPoint;
 class PlayState extends FlxState
 {	
 
-	private var colliders : FlxGroup = new FlxGroup();
+	private var player : Player;
+	private var colliders : FlxGroup = new FlxGroup(); // These collide with the stage
+	private var edibles : FlxGroup = new FlxGroup(); // These can be eaten
+	private var items : FlxGroup = new FlxGroup(); // These can be eaten
+	private var playerItems : FlxGroup = new FlxGroup(); // These can be eaten
 	private var mapCollide : FlxTilemap;
 	
 	/**
@@ -36,18 +43,30 @@ class PlayState extends FlxState
 
 		//FlxG.sound.playMusic("assets/music/coldWorld1.mp3");
 		
+		add(new FlxSprite(0, 0, "assets/images/bg.png"));
+		
 		var tiledMap : TiledMap = new TiledMap("assets/data/testmap.tmx");
 		var flxMap : FlxTilemap	= new FlxTilemap();
-		flxMap.widthInTiles = 16;
-		flxMap.heightInTiles = 12;
-		flxMap.loadMap(tiledMap.layers[0].tileArray, "assets/images/tileset_placeholder.png", 50, 50);
+		flxMap.widthInTiles = 20;
+		flxMap.heightInTiles = 15;
+		flxMap.loadMap(tiledMap.layers[0].tileArray, "assets/images/tileset_placeholder.png", 40, 40);
 		mapCollide = flxMap;
 		add(flxMap);
 		
-		var player : Player = new Player(100, 400);
+		player = new Player(100, 400);
 		add(player);
 		colliders.add(player);
-						
+		
+		var mob : EdibleMob = new EdibleMob(500, 400);
+		add(mob);
+		edibles.add(mob);
+		colliders.add(mob);
+	
+		var item : Item = new Item(200, 400);
+		add(item);
+		colliders.add(item);
+		items.add(item);
+		
 		//FlxG.camera.follow(player, FlxCamera.STYLE_PLATFORMER, new FlxPoint(-200, 700));
 	}
 
@@ -67,6 +86,28 @@ class PlayState extends FlxState
 	{
 		super.update();
 		FlxG.collide(mapCollide, colliders);
+		FlxG.collide(player, edibles, eatMob);
+		FlxG.collide(player, items, collideItem);
 	}	
+	
+	private function collideItem(obj1 : Player, obj2 : Item) : Void
+	{
+		if (obj2.owner == null) 
+		{
+			obj1.attach(obj2, 20);
+			colliders.remove(obj2);
+			items.remove(obj2);
+			playerItems.add(obj2);
+		}
+	}
+	
+	private function eatMob(obj1 : Player, obj2 : EdibleMob) : Void
+	{
+		obj1.addMass(obj2.eatMass);
+		obj2.kill();
+		remove(obj2);
+		edibles.remove(obj2);
+		colliders.remove(obj2);
+	}
 
 }

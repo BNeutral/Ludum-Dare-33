@@ -1,4 +1,5 @@
 package characters ;
+import flixel.addons.display.FlxNestedSprite;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -10,7 +11,7 @@ import flixel.util.FlxPoint;
 /**
  * Class for the player character
  */
-class Player extends FlxSprite
+class Player extends Attacher
 {
 	private var baseSpeed : Float = 200;
 	private var speedMultiplier : Float = 200;
@@ -19,6 +20,7 @@ class Player extends FlxSprite
 	private var gravityVector : FlxPoint = new FlxPoint(0, 0);
 	private var moveVector : FlxPoint = new FlxPoint(0, 0);
 	private var maxVel : Float = 400;
+	private var slimeLostRolling : Float = 0.0001;
 	
 	private var wasTouchingFloor : Bool = false;
 	private var wasTouchingLeft : Bool = false;
@@ -27,16 +29,20 @@ class Player extends FlxSprite
 	
 	private var origWidth : Float;
 	private var origHeight : Float;
+	private var origOffx : Float;
+	private var origOffy : Float;
 	private var currentSize : Float = 1;
 	
 	public function new(x : Int, y : Int) 
 	{
-		super(x, y, "assets/images/player_placeholder.png");
+		super(x, y, "assets/images/slime.png");
 		drag.x = 700;
 		drag.y = 700;
 		angularDrag = 700;
-		centerOrigin();
-		centerOffsets(true);
+		origOffx = offset.x = width / 6;
+		origOffy = offset.y = height / 6;
+		width -= width / 3;
+		height -= height / 3;		
 		origWidth = width;
 		origHeight = height;
 	}
@@ -44,27 +50,43 @@ class Player extends FlxSprite
 	override public function update():Void 
 	{
 		movementUpdate();
-		if (FlxG.keys.justPressed.ONE) adjustSize(currentSize += 0.1);
-		if (FlxG.keys.justPressed.TWO) adjustSize(currentSize -= 0.1);
+		if (FlxG.keys.justPressed.ONE) adjustSize(currentSize + 0.1);
+		if (FlxG.keys.justPressed.TWO) adjustSize(currentSize - 0.1);
 		speedMultiplier = baseSpeed / currentSize;
 		super.update();
 	}
 	
+	/**
+	 * Adds to the slime's mass. The original slime can be said to have 1000 mass
+	 * @param	Float	Amount of mass to add (or substract!)
+	 */
+	public function addMass(mass : Float) : Void
+	{
+		adjustSize(currentSize+mass / 1000);
+	}
+	
+	/**
+	 * Changes the slime size to that specified in the multiplier
+	 * @param	multiplier		A float > 0
+	 */
 	private function adjustSize(multiplier : Float)
 	{
 		scale.x = multiplier;
 		scale.y = multiplier;
 		var diffX : Float = (width - multiplier * origWidth);
 		var diffY : Float = (height - multiplier * origHeight);
-		offset.x += diffX/2;
-		offset.y += diffY/2;
 		x += diffX / 2;
 		y += diffY;		
 		width = multiplier * origWidth;
 		height = multiplier * origHeight;
-		
+		centerOrigin();
+		centerOffsets();
+		currentSize = multiplier;
 	}
 		
+	/**
+	 * Does a lot of bullshit so this slime moves on walls
+	 */
 	private function movementUpdate() : Void
 	{
 		//var speed : Float = FlxMath.vectorLength(velocity.x, velocity.y);
@@ -152,8 +174,8 @@ class Player extends FlxSprite
 		
 		if (FlxG.keys.justPressed.UP && isTouching(FlxObject.ANY))
 		{
-			velocity.y += gravityVector.y * jumpMultiplier;
-			velocity.x -= gravityVector.x * jumpMultiplier;
+			velocity.y += gravityVector.y * jumpMultiplier * currentSize;
+			velocity.x -= gravityVector.x * jumpMultiplier * currentSize;
 		}
 		
 		wasTouchingFloor = isTouching(FlxObject.FLOOR);
@@ -161,6 +183,10 @@ class Player extends FlxSprite
 		wasTouchingRight = (isTouching(FlxObject.WALL) && !isTouching(FlxObject.LEFT));
 		wasTouchingCeil = isTouching(FlxObject.CEILING);
 		
+		if (isTouching(FlxObject.ANY))
+		{
+			adjustSize(currentSize - slimeLostRolling * (FlxMath.vectorLength(velocity.x, velocity.y)) * FlxG.elapsed);
+		}
 		
 		if (FlxG.keys.pressed.RIGHT || FlxG.keys.pressed.LEFT) 
 		{
