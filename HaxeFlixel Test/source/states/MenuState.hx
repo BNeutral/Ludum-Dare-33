@@ -18,7 +18,7 @@ import openfl.display.BitmapData;
 class MenuState extends FlxState
 {
 	private var texts : Array<TextWithCallback> = new Array<TextWithCallback>();
-	private var cursor : FlxSprite = new FlxSprite(220, 0, new BitmapData(32, 32));
+	private var cursor : FlxSprite = new FlxSprite(220, 0, "assets/images/slimeIcon.png");
 	private var cursorCounter : Int = 0;
 	
 	private static inline var yOffset : Int = 300;
@@ -33,10 +33,15 @@ class MenuState extends FlxState
 		addOption("NEW GAME", function() { FlxG.switchState(new PlayState()); } );
 		addOption("LEVEL SELECT", function(){ FlxG.switchState(new LevelSelectState()); } );
 		//addOption("CONTROLS", function(){ FlxG.switchState(new ControlsState()); } );
-		addOption("CREDITS", function(){ FlxG.switchState(new CreditsState()); } );
+		addOption("CREDITS", function() { FlxG.switchState(new CreditsState()); } );
+		
 		updateCursorPos();
-		add(cursor);		
-		FlxTween.angle(cursor, 0, 90, 1, { type : FlxTween.LOOPING, ease : FlxEase.bounceOut } );
+		add(cursor);	
+		//cursor.loadRotatedGraphic("assets/images/slimeIcon.png", 16, -1, false, false);
+		FlxTween.angle(cursor, 0, 60, 0.5, { type : FlxTween.PINGPONG, ease : FlxEase.bounceOut } );
+		
+		
+		
 		FlxG.mouse.visible = false;
 	}
 	
