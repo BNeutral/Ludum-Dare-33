@@ -39,7 +39,7 @@ class MenuState extends FlxState
 		updateCursorPos();
 		add(cursor);
 		
-		decoration.scale(0.5);
+		decoration.scale.x = decoration.scale.y = 0.5;
 		add(decoration);
 		
 		FlxTween.tween(cursor, { angle : 360 }, 1.5, {type : FlxTween.LOOPING, ease : FlxEase.cubeInOut});
