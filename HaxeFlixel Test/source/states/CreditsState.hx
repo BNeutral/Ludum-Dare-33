@@ -27,6 +27,7 @@ class CreditsState extends FlxState
 		addButton(" '- Twitter", "http://twitter.com/bneutral");
 		addButton(" '- Tumblr", "http://bneutral.tumblr.com");
 		addText("A_C - Additional programming");
+		addText("...and moral support");
 		addText("Gats - Art");
 		addButton(" '- Twitter", "http://bneutral.tumblr.com");
 		addText("Geistbox - Music");
