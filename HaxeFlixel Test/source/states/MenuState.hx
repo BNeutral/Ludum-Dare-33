@@ -20,6 +20,7 @@ class MenuState extends FlxState
 	private var texts : Array<TextWithCallback> = new Array<TextWithCallback>();
 	private var cursor : FlxSprite = new FlxSprite(220, 0, "assets/images/slimeIcon.png");
 	private var cursorCounter : Int = 0;
+	private var decoration : FlxSprite = new FlxSprite(400, 0, "assets/images/slimeKing.png");
 	
 	private static inline var yOffset : Int = 300;
 	private static inline var ySpacing : Int = 60;
@@ -36,9 +37,12 @@ class MenuState extends FlxState
 		addOption("CREDITS", function() { FlxG.switchState(new CreditsState()); } );
 		
 		updateCursorPos();
-		add(cursor);	
-		//cursor.loadRotatedGraphic("assets/images/slimeIcon.png", 16, -1, false, false);
-		FlxTween.tween(cursor, { angle : 360 }, 2, {type : FlxTween.LOOPING, ease : FlxEase.cubeInOut});
+		add(cursor);
+		
+		decoration.scale(0.5);
+		add(decoration);
+		
+		FlxTween.tween(cursor, { angle : 360 }, 1.5, {type : FlxTween.LOOPING, ease : FlxEase.cubeInOut});
 		
 		
 		
