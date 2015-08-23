@@ -6,13 +6,12 @@ import painting.SlimeCanvas;
 
 class PercentDisplay extends FlxGroup
 {
-	private var sign : FlxSprite;
 	private var firstNum : FlxSprite;
 	private var secondNum : FlxSprite;
 	private var thirdNum : FlxSprite;
 	
 	private var requiredPaint : Int = 0;
-	private var currentNumber : Int = 0;
+	public var currentNumber : Int = 0;
 	private var slimeCanvas : SlimeCanvas;
 
 	private static var route : String = "assets/images/numbers/";
@@ -29,8 +28,10 @@ class PercentDisplay extends FlxGroup
 		add(secondNum);
 		thirdNum = new FlxSprite(secondNum.x + secondNum.width, 0, route+strNUmbers[0]);
 		add(thirdNum);
-		sign = new FlxSprite(thirdNum.x + thirdNum.width, 0, route+"%.png");
+		var sign : FlxSprite= new FlxSprite(thirdNum.x + thirdNum.width, 0, route+"%.png");
 		add(sign);
+		var bucket : FlxSprite = new FlxSprite(sign.x + sign.width, 0, route+"bucket.png");
+		add(bucket);
 		
 		currentNumber = 0;
 		
@@ -38,6 +39,9 @@ class PercentDisplay extends FlxGroup
 		secondNum.scrollFactor.x = secondNum.scrollFactor.y = 0;
 		thirdNum.scrollFactor.x = thirdNum.scrollFactor.y = 0;
 		sign.scrollFactor.x = sign.scrollFactor.y = 0;
+		bucket.scrollFactor.x = bucket.scrollFactor.y = 0;
+		
+		firstNum.solid = secondNum.solid = thirdNum.solid = sign.solid = bucket.solid = false;
 	}
 	
 	override public function update():Void 

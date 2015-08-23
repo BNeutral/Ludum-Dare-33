@@ -1,8 +1,10 @@
 package states;
 
+import characters.Chest;
 import characters.EdibleMob;
 import characters.Sticker;
 import flixel.tweens.FlxEase;
+import flixel.util.FlxRect;
 import items.Item;
 import characters.Player;
 import flixel.addons.editors.tiled.TiledMap;
@@ -31,14 +33,19 @@ import ui.PercentDisplay;
  */
 class PlayState extends FlxState
 {	
+	private var layer1 : FlxGroup; //Bottomost layer, add to these instead of the state
+	private var layer2 : FlxGroup;
+	private var layer3 : FlxGroup;
 
 	private var player : Player;
-	private var colliders : FlxGroup = new FlxGroup(); // These collide with the stage
-	private var edibles : FlxTypedGroup<EdibleMob> = new FlxTypedGroup<EdibleMob>(); // These can be eaten
-	private var items : FlxTypedGroup<Item> = new FlxTypedGroup<Item> (); // These can be eaten
-	private var playerItems : FlxTypedGroup<Item>  = new FlxTypedGroup<Item> (); // These can be eaten
+	private var stageCollisionExtra : FlxGroup;
+	private var colliders : FlxGroup; // These collide with the stage
+	private var edibles : FlxTypedGroup<EdibleMob>; // These can be eaten
+	private var items : FlxTypedGroup<Item>; // These can be eaten
+	private var playerItems : FlxTypedGroup<Item>; // These can be eaten
 	private var mapCollide : FlxTilemap;
 	private var slimeCanvas : SlimeCanvas;
+	private var counter : PercentDisplay;
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -46,47 +53,69 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		super.create();
+		
+		layer1 = new FlxGroup();
+		layer2 = new FlxGroup();
+		layer3 = new FlxGroup();
+		colliders = new FlxGroup();
+		stageCollisionExtra = new FlxGroup();
+		edibles = new FlxTypedGroup<EdibleMob>();
+		items = new FlxTypedGroup<Item>();
+		playerItems = new FlxTypedGroup<Item>();
+		
 		this.bgColor = 0xFFFFFFFF;
 
 		FlxG.sound.playMusic("assets/music/Stage 1.mp3");
 		
 		add(new FlxSprite(0, 0, "assets/images/bg.png"));
-		
+				
 		var tiledMap : TiledMap = new TiledMap("assets/data/testmap.tmx");
 		var flxMap : FlxTilemap	= new FlxTilemap();
-		flxMap.widthInTiles = 20;
-		flxMap.heightInTiles = 15;
+		
+		flxMap.widthInTiles = tiledMap.width;
+		flxMap.heightInTiles = tiledMap.height;
 		flxMap.loadMap(tiledMap.layers[0].tileArray, "assets/images/tileset_placeholder.png", 40, 40);
 		mapCollide = flxMap;
 		add(flxMap);
 		
-		slimeCanvas = new SlimeCanvas(800, 600);
+		slimeCanvas = new SlimeCanvas(tiledMap.width*40, tiledMap.height*40);
 		add(slimeCanvas);
 		
+		add(layer1);
+		add(layer2);
+		add(layer3);
+		
 		player = new Player(100, 400);
-		add(new Sticker(player, "assets/images/slime_crown.png"));
-		add(player);
+		layer2.add(new Sticker(player, "assets/images/slime_crown.png"));
+		layer2.add(player);
 		colliders.add(player);
 		
 		var emitter : SlimeEmitter = new SlimeEmitter(player, flxMap, slimeCanvas);
-		add(emitter);
+		layer2.add(emitter);
 		
 		var mob : EdibleMob = new EdibleMob(500, 400);
-		add(mob);
+		layer2.add(mob);
 		edibles.add(mob);
 		colliders.add(mob);
 	
 		var item : Item = new Item(200, 400);
-		add(item);
+		layer2.add(item);
 		colliders.add(item);
 		items.add(item);
 		var item : Item = new Item(300, 400);
-		add(item);
+		layer2.add(item);
 		colliders.add(item);
 		items.add(item);
 		
-		add(new PercentDisplay(40000, slimeCanvas));
-		//FlxG.camera.follow(player, FlxCamera.STYLE_PLATFORMER, new FlxPoint(-200, 700));
+		counter = new PercentDisplay(40000, slimeCanvas);
+		add(counter);
+		
+		add(new Chest(740, 580, layer1, layer2, layer3, stageCollisionExtra, player, counter, wonLevel, 20));
+
+		FlxG.worldBounds.set(0, 0, tiledMap.width * 40, tiledMap.height * 40);
+		FlxG.camera.bounds = new FlxRect(0, 0, tiledMap.width * 40, tiledMap.height * 40);
+		FlxG.camera.follow(player, FlxCamera.STYLE_PLATFORMER);
+		FlxG.camera.setPosition(0, 0);
 	}
 
 	/**
@@ -97,6 +126,11 @@ class PlayState extends FlxState
 	{
 		super.destroy();
 	}
+	
+	private function wonLevel()
+	{
+		FlxG.switchState(new MenuState());
+	}
 
 	/**
 	 * Function that is called once every frame.
@@ -105,22 +139,25 @@ class PlayState extends FlxState
 	{
 		super.update();
 		FlxG.collide(mapCollide, colliders);
+		FlxG.collide(stageCollisionExtra, colliders);
 		FlxG.collide(player, edibles, eatMob);
-		FlxG.collide(player, items, collideItem);
+		FlxG.overlap(player, items, collideItem);
 		holdTest();
 		
-		if (FlxG.keys.justPressed.R) FlxG.resetState();
-		if (player.alive && player.currentSize < 0.5)
+		
+		if (player.alive && (player.currentSize < 0.5 || !player.inWorldBounds()))
 		{
 			player.kill();
 			var gameOver : FlxSprite = new FlxSprite(0, 0, "assets/images/UI/GameOverLay.png");
 			gameOver.y = -gameOver.height;
 			gameOver.x = FlxG.width / 2 - gameOver.width / 2;
+			gameOver.scrollFactor.set(0, 0);
 			add(gameOver);
 			FlxTween.tween(gameOver, { y : (FlxG.height/2 - gameOver.height/2) } , 1, { ease : FlxEase.bounceOut } );
 		}
 		
 		if (FlxG.keys.justPressed.ESCAPE) FlxG.switchState(new MenuState());
+		if (FlxG.keys.justPressed.R) FlxG.switchState(new PlayState());
 	}	
 	
 	/**
