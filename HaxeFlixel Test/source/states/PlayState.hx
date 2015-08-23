@@ -1,7 +1,8 @@
 package states;
 
 import characters.EdibleMob;
-import characters.Item;
+import characters.Sticker;
+import items.Item;
 import characters.Player;
 import flixel.addons.editors.tiled.TiledMap;
 import flixel.FlxBasic;
@@ -55,6 +56,7 @@ class PlayState extends FlxState
 		add(flxMap);
 		
 		player = new Player(100, 400);
+		add(new Sticker(player, "assets/images/slime_crown.png"));
 		add(player);
 		colliders.add(player);
 		
@@ -64,6 +66,10 @@ class PlayState extends FlxState
 		colliders.add(mob);
 	
 		var item : Item = new Item(200, 400);
+		add(item);
+		colliders.add(item);
+		items.add(item);
+		var item : Item = new Item(300, 400);
 		add(item);
 		colliders.add(item);
 		items.add(item);

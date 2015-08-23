@@ -1,4 +1,4 @@
-package characters;
+package items;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.util.FlxMath;
@@ -7,8 +7,8 @@ import openfl.display.BitmapData;
 class Item extends FlxSprite
 {
 	public var owner : FlxSprite = null;
-	private var angleOffset : Float = 0;
-	private var radius : Float = 0;
+	public var angleOffset : Float = 0;
+	public var radius : Float = 0;
 	public var detachThreshold : Float = 0.3;
 
 	public function new(X : Float, Y : Float) 
@@ -30,7 +30,7 @@ class Item extends FlxSprite
 	{
 		owner = target;
 		radius = target.width + target.offset.x;
-		//angleOffset = target.angle;
+		angleOffset = target.angle; //+Util.toDegrees(Math.atan2( (y + height / 2) - (target.y + target.height / 2), (x + width / 2) - (target.x + target.width / 2)));
 	}
 	
 	/**
@@ -48,8 +48,8 @@ class Item extends FlxSprite
 		else 
 		{
 			acceleration.y = 0;
-			x = owner.x + owner.width / 2 - width/2 + radius * owner.scale.x/2 * Math.cos(Util.toRadians(owner.angle));
-			y = owner.y + owner.height / 2 - height/2 + radius * owner.scale.y/2 * Math.sin(Util.toRadians(owner.angle));
+			x = owner.x + owner.width / 2 - width/2 + radius * owner.scale.x/2 * Math.cos(Util.toRadians(owner.angle+angleOffset));
+			y = owner.y + owner.height / 2 - height/2 + radius * owner.scale.y/2 * Math.sin(Util.toRadians(owner.angle+angleOffset));
 			angle = owner.angle+angleOffset;
 		}		
 		

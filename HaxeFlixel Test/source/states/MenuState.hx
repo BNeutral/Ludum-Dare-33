@@ -38,7 +38,7 @@ class MenuState extends FlxState
 		updateCursorPos();
 		add(cursor);	
 		//cursor.loadRotatedGraphic("assets/images/slimeIcon.png", 16, -1, false, false);
-		FlxTween.angle(cursor, 0, 60, 0.5, { type : FlxTween.PINGPONG, ease : FlxEase.bounceOut } );
+		FlxTween.tween(cursor, { angle : 360 }, 2, {type : FlxTween.LOOPING, ease : FlxEase.cubeInOut});
 		
 		
 		

@@ -3,6 +3,7 @@ import flixel.addons.display.FlxNestedSprite;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.system.FlxSound;
 import flixel.tweens.FlxTween;
 import flixel.tweens.misc.AngleTween;
 import flixel.util.FlxMath;
@@ -33,6 +34,8 @@ class Player extends Attacher
 	private var origOffy : Float;
 	private var currentSize : Float = 1;
 	
+	private var moveSound : FlxSound = new FlxSound();
+	
 	public function new(x : Int, y : Int) 
 	{
 		super(x, y, "assets/images/slime.png");
@@ -45,15 +48,36 @@ class Player extends Attacher
 		height -= height / 3;		
 		origWidth = width;
 		origHeight = height;
+		moveSound.loadEmbedded("assets/sounds/SlimeMovement.wav", true);
+		moveSound.play();
+		
 	}
-	
+		
 	override public function update():Void 
 	{
-		movementUpdate();
+		soundUpdate();
+		movementUpdate();		
 		if (FlxG.keys.justPressed.ONE) adjustSize(currentSize + 0.1);
 		if (FlxG.keys.justPressed.TWO) adjustSize(currentSize - 0.1);
 		speedMultiplier = baseSpeed / currentSize;
 		super.update();
+	}
+	
+	/**
+	 * Spunds stuff
+	 */
+	private function soundUpdate()
+	{
+		if (justTouched(FlxObject.ANY) && !wasTouchingCeil && !wasTouchingFloor && !wasTouchingLeft && !wasTouchingRight)
+		{
+			FlxG.sound.play("assets/sounds/SlimeLand.wav");
+		}
+		if (isTouching(FlxObject.ANY) && Math.abs(angularVelocity) > 1)
+		{
+			moveSound.volume = Math.abs(velocity.y+velocity.x)/maxVel;
+		}
+		else
+			moveSound.volume = 0;
 	}
 	
 	/**
@@ -89,8 +113,6 @@ class Player extends Attacher
 	 */
 	private function movementUpdate() : Void
 	{
-		//var speed : Float = FlxMath.vectorLength(velocity.x, velocity.y);
-		
 		if (justTouched(FlxObject.CEILING))
 		{
 			maxVelocity.y = 0;

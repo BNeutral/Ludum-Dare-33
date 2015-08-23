@@ -1,6 +1,7 @@
 package characters;
 import flixel.addons.display.FlxNestedSprite;
 import flixel.FlxSprite;
+import items.Item;
 
 /**
  * Class that can get thins attached
