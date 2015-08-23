@@ -65,7 +65,7 @@ class PlayState extends FlxState
 		
 		this.bgColor = 0xFFFFFFFF;
 
-		FlxG.sound.playMusic("assets/music/Stage 1 (Comp).mp3");
+		FlxG.sound.playMusic("assets/music/Compressed/Stage 1 (Comp).mp3");
 		
 		add(new FlxSprite(0, 0, "assets/images/bg.png"));
 				
