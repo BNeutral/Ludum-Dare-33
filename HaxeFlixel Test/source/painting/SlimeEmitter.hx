@@ -46,7 +46,7 @@ class SlimeEmitter extends FlxEmitter
 	 */
 	private function checkPlayerStatus() : Void
 	{
-		if (player.wasMoving)
+		if (!player.wasMoving)
 		{
 			this.on = false;
 		}
@@ -57,22 +57,22 @@ class SlimeEmitter extends FlxEmitter
 			{
 				xVelocity.min = -100;
 				xVelocity.max = 100;
-				yVelocity.min = -1000;
-				yVelocity.max = -800;
+				yVelocity.min = -600;
+				yVelocity.max = -500;
 			}
 			else if (player.wasTouchingLeft)
 			{
 				xVelocity.min = -200;
 				xVelocity.max = -100;
-				yVelocity.min = -100;
-				yVelocity.max = 100;
+				yVelocity.min = -400;
+				yVelocity.max = -200;
 			}
 			else if (player.wasTouchingRight)
 			{
 				xVelocity.min = 100;
 				xVelocity.max = 200;
-				yVelocity.min = -100;
-				yVelocity.max = 100;
+				yVelocity.min = -400;
+				yVelocity.max = -200;
 			}
 			else if (player.wasTouchingFloor)
 			{

@@ -34,7 +34,7 @@ class Player extends Attacher
 	private var origHeight : Float;
 	private var origOffx : Float;
 	private var origOffy : Float;
-	private var currentSize : Float = 1;
+	public var currentSize : Float = 1;
 	
 	private var moveSound : FlxSound = new FlxSound();
 	
@@ -75,7 +75,7 @@ class Player extends Attacher
 			FlxG.sound.play("assets/sounds/SlimeLand.wav");
 		}
 		if (wasMoving)
-			moveSound.volume = Math.abs(velocity.y + velocity.x) / maxVel;
+			moveSound.volume = (Math.abs(velocity.y) + Math.abs(velocity.x)) / maxVel;
 		else
 			moveSound.volume = 0;
 	}
@@ -217,8 +217,8 @@ class Player extends Attacher
 			if (wasTouchingCeil) angularVelocity -= velocity.x * 2 *(1/currentSize);
 		}		
 		
-		wasMoving = ( ((isTouching(FlxObject.FLOOR) || isTouching(FlxObject.CEILING)) && (Math.abs(velocity.x) < 1))
-			|| 	( (isTouching(FlxObject.WALL) && (Math.abs(velocity.y) < 1))));
+		wasMoving = ( ((isTouching(FlxObject.FLOOR) || isTouching(FlxObject.CEILING)) && (Math.abs(velocity.x) > 1))
+			|| 	( (isTouching(FlxObject.WALL) && (Math.abs(velocity.y) > 1))));
 			
 	}
 	

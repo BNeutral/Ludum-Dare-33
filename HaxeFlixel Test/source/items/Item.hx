@@ -9,7 +9,7 @@ class Item extends FlxSprite
 	public var owner : FlxSprite = null;
 	public var angleOffset : Float = 0;
 	public var radius : Float = 0;
-	public var detachThreshold : Float = 0.3;
+	public var detachThreshold : Float = 0.6;
 
 	public function new(X : Float, Y : Float) 
 	{

@@ -2,6 +2,7 @@ package states;
 
 import characters.EdibleMob;
 import characters.Sticker;
+import flixel.tweens.FlxEase;
 import items.Item;
 import characters.Player;
 import flixel.addons.editors.tiled.TiledMap;
@@ -23,6 +24,7 @@ import flixel.util.FlxMath;
 import flixel.util.FlxPoint;
 import painting.SlimeCanvas;
 import painting.SlimeEmitter;
+import ui.PercentDisplay;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -83,6 +85,7 @@ class PlayState extends FlxState
 		colliders.add(item);
 		items.add(item);
 		
+		add(new PercentDisplay(40000, slimeCanvas));
 		//FlxG.camera.follow(player, FlxCamera.STYLE_PLATFORMER, new FlxPoint(-200, 700));
 	}
 
@@ -105,6 +108,19 @@ class PlayState extends FlxState
 		FlxG.collide(player, edibles, eatMob);
 		FlxG.collide(player, items, collideItem);
 		holdTest();
+		
+		if (FlxG.keys.justPressed.R) FlxG.resetState();
+		if (player.alive && player.currentSize < 0.5)
+		{
+			player.kill();
+			var gameOver : FlxSprite = new FlxSprite(0, 0, "assets/images/UI/GameOverLay.png");
+			gameOver.y = -gameOver.height;
+			gameOver.x = FlxG.width / 2 - gameOver.width / 2;
+			add(gameOver);
+			FlxTween.tween(gameOver, { y : (FlxG.height/2 - gameOver.height/2) } , 1, { ease : FlxEase.bounceOut } );
+		}
+		
+		if (FlxG.keys.justPressed.ESCAPE) FlxG.switchState(new MenuState());
 	}	
 	
 	/**

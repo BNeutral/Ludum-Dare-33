@@ -32,7 +32,7 @@ class SlimeParticle extends FlxParticle
 	
 	private function paint(obj1 : FlxParticle, obj2 : FlxTilemap)
 	{
-		canvas.paint(cast(x, Int) , cast(y, Int));
+		canvas.paint(cast(x - 5, Int) , cast(y, Int));
 		kill();
 	}
 	
