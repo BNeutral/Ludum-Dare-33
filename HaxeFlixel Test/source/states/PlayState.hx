@@ -21,6 +21,8 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxCollision;
 import flixel.util.FlxMath;
 import flixel.util.FlxPoint;
+import painting.SlimeCanvas;
+import painting.SlimeEmitter;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -34,6 +36,7 @@ class PlayState extends FlxState
 	private var items : FlxTypedGroup<Item> = new FlxTypedGroup<Item> (); // These can be eaten
 	private var playerItems : FlxTypedGroup<Item>  = new FlxTypedGroup<Item> (); // These can be eaten
 	private var mapCollide : FlxTilemap;
+	private var slimeCanvas : SlimeCanvas;
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -55,10 +58,16 @@ class PlayState extends FlxState
 		mapCollide = flxMap;
 		add(flxMap);
 		
+		slimeCanvas = new SlimeCanvas(800, 600);
+		add(slimeCanvas);
+		
 		player = new Player(100, 400);
 		add(new Sticker(player, "assets/images/slime_crown.png"));
 		add(player);
 		colliders.add(player);
+		
+		var emitter : SlimeEmitter = new SlimeEmitter(player, flxMap, slimeCanvas);
+		add(emitter);
 		
 		var mob : EdibleMob = new EdibleMob(500, 400);
 		add(mob);

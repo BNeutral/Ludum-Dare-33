@@ -23,10 +23,12 @@ class Player extends Attacher
 	private var maxVel : Float = 400;
 	private var slimeLostRolling : Float = 0.0001;
 	
-	private var wasTouchingFloor : Bool = false;
-	private var wasTouchingLeft : Bool = false;
-	private var wasTouchingRight : Bool = false;
-	private var wasTouchingCeil : Bool = false;
+	public var wasTouchingFloor : Bool = false;
+	public var wasTouchingLeft : Bool = false;
+	public var wasTouchingRight : Bool = false;
+	public var wasTouchingCeil : Bool = false;
+	public var wasTouchingAny : Bool = false;
+	public var wasMoving : Bool = false;
 	
 	private var origWidth : Float;
 	private var origHeight : Float;
@@ -55,8 +57,8 @@ class Player extends Attacher
 		
 	override public function update():Void 
 	{
+		movementUpdate();
 		soundUpdate();
-		movementUpdate();		
 		if (FlxG.keys.justPressed.ONE) adjustSize(currentSize + 0.1);
 		if (FlxG.keys.justPressed.TWO) adjustSize(currentSize - 0.1);
 		speedMultiplier = baseSpeed / currentSize;
@@ -72,10 +74,8 @@ class Player extends Attacher
 		{
 			FlxG.sound.play("assets/sounds/SlimeLand.wav");
 		}
-		if (isTouching(FlxObject.ANY) && Math.abs(angularVelocity) > 1)
-		{
-			moveSound.volume = Math.abs(velocity.y+velocity.x)/maxVel;
-		}
+		if (wasMoving)
+			moveSound.volume = Math.abs(velocity.y + velocity.x) / maxVel;
 		else
 			moveSound.volume = 0;
 	}
@@ -216,6 +216,9 @@ class Player extends Attacher
 			if (wasTouchingRight) angularVelocity -= velocity.y * 2 *(1/currentSize);
 			if (wasTouchingCeil) angularVelocity -= velocity.x * 2 *(1/currentSize);
 		}		
+		
+		wasMoving = ( ((isTouching(FlxObject.FLOOR) || isTouching(FlxObject.CEILING)) && (Math.abs(velocity.x) < 1))
+			|| 	( (isTouching(FlxObject.WALL) && (Math.abs(velocity.y) < 1))));
 			
 	}
 	

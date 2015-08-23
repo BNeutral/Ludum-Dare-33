@@ -2,7 +2,7 @@
 <project version="2">
   <!-- Output SWF options -->
   <output>
-    <movie outputType="CustomBuild" />
+    <movie outputType="Application" />
     <movie input="" />
     <movie path="Project.xml" />
     <movie fps="60" />
@@ -29,7 +29,7 @@
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="True" />
-    <option additional="-swf-version 12" />
+    <option additional="-swf-version 11.8" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
