@@ -15,8 +15,11 @@ class Item extends FlxSprite
 	{
 		super(X, Y, "assets/images/items/sword.png");
 		this.maxVelocity.y = 500;
+		width = height = (width+height)/2;
+		centerOffsets();
 		this.drag.x = 1000;
 		this.drag.y = 1000;
+		
 	}
 	
 	/**
@@ -26,9 +29,7 @@ class Item extends FlxSprite
 	public function attach(target : FlxSprite) : Void
 	{
 		owner = target;
-		radius = Math.sqrt( Math.pow((x + _halfWidth) - (target.x + target.offset.x + target.width / 2), 2) + 
-							Math.pow((y + _halfHeight) - (target.y + target.offset.y +  target.height / 2), 2))
-							+_halfWidth;
+		radius = target.width + target.offset.x;
 		//angleOffset = target.angle;
 	}
 	
@@ -42,16 +43,16 @@ class Item extends FlxSprite
 	
 	override public function update():Void 
 	{
-		
+		super.update();
 		if (owner == null) acceleration.y = Constants.gravity;
 		else 
 		{
 			acceleration.y = 0;
-			x = (owner.x - owner.offset.x*owner.scale.x + owner.width / 2) + radius * owner.scale.x * Math.cos(Util.toRadians(owner.angle+angleOffset));
-			y = (owner.y - owner.offset.y*owner.scale.y + owner.height / 2) + radius * owner.scale.y * Math.sin(Util.toRadians(owner.angle+angleOffset));			
+			x = owner.x + owner.width / 2 - width/2 + radius * owner.scale.x/2 * Math.cos(Util.toRadians(owner.angle));
+			y = owner.y + owner.height / 2 - height/2 + radius * owner.scale.y/2 * Math.sin(Util.toRadians(owner.angle));
 			angle = owner.angle+angleOffset;
 		}		
-		super.update();
+		
 	}
 	
 }
