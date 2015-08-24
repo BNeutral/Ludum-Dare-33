@@ -13,6 +13,7 @@ class Reg
 	public static var lastClearedLevel :Int = 0;
 	public static var levelCompletition : Array<Int> = [];
 	public static var levels:Array<String> = [];
+	public static var owlMessages:Array<Array<String>> = [];
 	public static var levelSlimeTargets:Array<Int> = [];
 	
 	/**

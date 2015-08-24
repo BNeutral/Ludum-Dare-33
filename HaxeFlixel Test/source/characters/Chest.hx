@@ -14,8 +14,7 @@ class Chest extends FlxGroup
 	private var chest3 : FlxSprite;
 	private var chest4 : FlxSprite;
 	private var chest5 : FlxSprite;
-	private var border1 : FlxObject;
-	private var border2 : FlxObject;
+	private var border : FlxObject;
 	private var sweetspot : FlxObject; // To check for level exit
 	private var player : Player;
 	private var open : Bool = false;
@@ -37,23 +36,19 @@ class Chest extends FlxGroup
 		chest4 = new FlxSprite(X, Y-349, "assets/images/chest/Chest5.png");
 		chest5 = new FlxSprite(X, Y - 349, "assets/images/chest/Chest4.png");
 		sweetspot = new FlxObject(X + 320, Y + 200 - 349, 30, 170);
-		border1 = new FlxObject(X + 160, Y + 110 - 349, 240, 20);
-		border2 = new FlxObject(X + 380, Y + 130 - 349, 20, 220);
+		border = new FlxObject(X + 160, Y + 110 - 349, 240, 240);
+		border.allowCollisions = FlxObject.UP | FlxObject.RIGHT | FlxObject.DOWN;
 		
 		chest1.immovable = true;
 		chest2.immovable = true;
 		chest3.immovable = true;
 		chest4.immovable = true;
 		chest5.immovable = true;
-		border1.immovable = true;
-		border2.immovable = true;
+		border.immovable = true;
 		sweetspot.immovable = true;
 		
 		collision.add(chest2);		
-		collision.add(border1);
-		collision.add(border2);
-		top.add(border1);
-		top.add(border2);
+		collision.add(border);
 		
 		under.add(chest1);
 		under.add(chest2);

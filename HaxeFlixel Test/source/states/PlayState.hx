@@ -2,6 +2,7 @@ package states;
 
 import characters.Chest;
 import characters.EdibleMob;
+import characters.Owl;
 import characters.Sticker;
 import flixel.tweens.FlxEase;
 import flixel.util.FlxRect;
@@ -47,12 +48,22 @@ class PlayState extends FlxState
 	private var slimeCanvas : SlimeCanvas;
 	private var counter : PercentDisplay;
 	
+	private var levelNumber : Int;
+	
+	public function new(levelNumber : Int = 0)
+	{
+		super();
+		this.levelNumber = levelNumber;
+	}
+	
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	override public function create():Void
 	{
 		super.create();
+		
+		FlxTween.manager.clear();
 		
 		layer1 = new FlxGroup();
 		layer2 = new FlxGroup();
@@ -69,15 +80,25 @@ class PlayState extends FlxState
 		
 		add(new FlxSprite(0, 0, "assets/images/bg.png"));
 				
-		var tiledMap : TiledMap = new TiledMap("assets/data/testmap.tmx");
+		var tiledMap : TiledMap = new TiledMap("assets/data/template.tmx");
+		var flxMapBG1 : FlxTilemap	= new FlxTilemap();
+		var flxMapBG2 : FlxTilemap	= new FlxTilemap();
+		var flxMapBG3 : FlxTilemap	= new FlxTilemap();
 		var flxMap : FlxTilemap	= new FlxTilemap();
 		
-		flxMap.widthInTiles = tiledMap.width;
-		flxMap.heightInTiles = tiledMap.height;
-		flxMap.loadMap(tiledMap.layers[0].tileArray, "assets/images/tileset_placeholder.png", 40, 40);
+		flxMapBG1.widthInTiles = flxMapBG2.widthInTiles = flxMapBG3.widthInTiles = flxMap.widthInTiles = tiledMap.width;
+		flxMapBG1.heightInTiles = flxMapBG2.heightInTiles = flxMapBG3.heightInTiles = flxMap.heightInTiles = tiledMap.height;
+		flxMapBG1.loadMap(tiledMap.getLayer("Bg1").tileArray, "assets/images/tileset.png", 40, 40, 0, 1);
+		flxMapBG2.loadMap(tiledMap.getLayer("Bg2").tileArray, "assets/images/tileset.png", 40, 40, 0 , 1);
+		flxMapBG3.loadMap(tiledMap.getLayer("Bg3").tileArray, "assets/images/tileset.png", 40, 40, 0 , 1);
+		flxMap.loadMap(tiledMap.getLayer("Solid Tiles").tileArray, "assets/images/tileset.png", 40, 40, 0, 1);
 		mapCollide = flxMap;
-		add(flxMap);
 		
+		add(flxMapBG1);
+		add(flxMapBG2);
+		add(flxMapBG3);
+		add(flxMap);
+				
 		slimeCanvas = new SlimeCanvas(tiledMap.width*40, tiledMap.height*40);
 		add(slimeCanvas);
 		
@@ -85,14 +106,47 @@ class PlayState extends FlxState
 		add(layer2);
 		add(layer3);
 		
-		player = new Player(100, 400);
-		layer2.add(new Sticker(player, "assets/images/slime_crown.png"));
-		layer2.add(player);
-		colliders.add(player);
+		counter = new PercentDisplay(40000, slimeCanvas);
+		add(counter);
 		
-		var emitter : SlimeEmitter = new SlimeEmitter(player, flxMap, slimeCanvas);
-		layer2.add(emitter);
+		loadCharsFromTilemap(tiledMap.getLayer("PCs").tileArray, tiledMap.width, tiledMap.height);
 		
+		FlxG.worldBounds.set(0, 0, tiledMap.width * 40, tiledMap.height * 40);
+		FlxG.camera.bounds = new FlxRect(0, 0, tiledMap.width * 40, tiledMap.height * 40);
+		FlxG.camera.follow(player, FlxCamera.STYLE_PLATFORMER);
+		FlxG.camera.setPosition(0, 0);
+	}
+	
+	/**
+	 * Loads all extra things from the tilmap
+	 */
+	private function loadCharsFromTilemap(tiles : Array<Int>, widthInTiles : Int, heightInTiles : Int)
+	{
+		var totalTiles : Int = widthInTiles * heightInTiles;
+		
+		var owlCounter : Int = 0;
+		for (i in 0...totalTiles)
+		{
+			var x : Int = (i % widthInTiles) * 40;
+			var y : Int = cast(i / widthInTiles,Int) * 40;
+			switch (tiles[i])
+			{
+				case 496: // P1
+					player = new Player(x, y);
+					player.y -= player.height;
+					layer2.add(new Sticker(player, "assets/images/slime_crown.png"));
+					layer2.add(player);
+					colliders.add(player);					
+					var emitter : SlimeEmitter = new SlimeEmitter(player, mapCollide, slimeCanvas);
+					layer2.add(emitter);
+				case 497: // EXT
+					add(new Chest(x, y + 60, layer1, layer2, layer3, stageCollisionExtra, player, counter, wonLevel, 20));
+				case 504: // Owl
+					layer1.add(new Owl(x, y - 107 + 40, levelNumber, owlCounter++));
+			}
+		}
+		
+		/*
 		var mob : EdibleMob = new EdibleMob(500, 400);
 		layer2.add(mob);
 		edibles.add(mob);
@@ -105,17 +159,7 @@ class PlayState extends FlxState
 		var item : Item = new Item(300, 400);
 		layer2.add(item);
 		colliders.add(item);
-		items.add(item);
-		
-		counter = new PercentDisplay(40000, slimeCanvas);
-		add(counter);
-		
-		add(new Chest(740, 580, layer1, layer2, layer3, stageCollisionExtra, player, counter, wonLevel, 20));
-
-		FlxG.worldBounds.set(0, 0, tiledMap.width * 40, tiledMap.height * 40);
-		FlxG.camera.bounds = new FlxRect(0, 0, tiledMap.width * 40, tiledMap.height * 40);
-		FlxG.camera.follow(player, FlxCamera.STYLE_PLATFORMER);
-		FlxG.camera.setPosition(0, 0);
+		items.add(item);*/	
 	}
 
 	/**
@@ -125,8 +169,12 @@ class PlayState extends FlxState
 	override public function destroy():Void
 	{
 		super.destroy();
+		player.destroy();
 	}
 	
+	/**
+	 * Function to be called when you clear a level
+	 */
 	private function wonLevel()
 	{
 		FlxG.switchState(new MenuState());
@@ -143,7 +191,6 @@ class PlayState extends FlxState
 		FlxG.collide(player, edibles, eatMob);
 		FlxG.overlap(player, items, collideItem);
 		holdTest();
-		
 		
 		if (player.alive && (player.currentSize < 0.5 || !player.inWorldBounds()))
 		{
@@ -190,6 +237,9 @@ class PlayState extends FlxState
 		colliders.remove(obj2);
 	}
 	
+	/**
+	 * Checks if the player should drop the items it holds
+	 */
 	private function holdTest() : Void
 	{
 		for (item in playerItems)

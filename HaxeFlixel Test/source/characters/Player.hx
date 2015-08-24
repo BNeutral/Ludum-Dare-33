@@ -6,6 +6,7 @@ import flixel.FlxSprite;
 import flixel.system.FlxSound;
 import flixel.tweens.FlxTween;
 import flixel.tweens.misc.AngleTween;
+import flixel.tweens.misc.ColorTween;
 import flixel.util.FlxMath;
 import flixel.util.FlxPoint;
 
@@ -38,6 +39,8 @@ class Player extends Attacher
 	
 	private var moveSound : FlxSound = new FlxSound();
 	
+	private var invuln : Bool = false;
+	
 	public function new(x : Int, y : Int) 
 	{
 		super(x, y, "assets/images/slime.png");
@@ -54,6 +57,22 @@ class Player extends Attacher
 		moveSound.play();
 		
 	}
+	
+	override public function destroy():Void 
+	{
+		super.destroy();
+		moveSound.stop();
+	}
+	
+	private var colTween : FlxTween;
+	override public function hurt(Damage:Float):Void 
+	{
+		addMass( -Damage);	
+		if (Damage > 0)
+		{
+			FlxTween.color(this, 0.2, 0xFF0000, 0xFFFFFF, 1, 1, { type : FlxTween.ONESHOT } );
+		}
+	}
 		
 	override public function update():Void 
 	{
@@ -61,6 +80,7 @@ class Player extends Attacher
 		soundUpdate();
 		if (FlxG.keys.justPressed.ONE) adjustSize(currentSize + 0.1);
 		if (FlxG.keys.justPressed.TWO) adjustSize(currentSize - 0.1);
+		if (FlxG.keys.justPressed.THREE) hurt(100);
 		speedMultiplier = baseSpeed / currentSize;
 		super.update();
 	}
