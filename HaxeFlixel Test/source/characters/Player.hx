@@ -85,6 +85,12 @@ class Player extends Attacher
 		super.update();
 	}
 	
+	override public function kill():Void 
+	{
+		super.kill();
+		moveSound.stop();
+	}
+	
 	/**
 	 * Spunds stuff
 	 */
@@ -126,6 +132,10 @@ class Player extends Attacher
 		centerOrigin();
 		centerOffsets();
 		currentSize = multiplier;
+		if (wasTouchingFloor) y -= 1;
+		if (wasTouchingLeft) x += 1;
+		if (wasTouchingRight) x -= 1;
+		if (wasTouchingCeil) y += 1;
 	}
 		
 	/**
