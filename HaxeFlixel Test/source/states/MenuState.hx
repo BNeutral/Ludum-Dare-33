@@ -20,7 +20,18 @@ class MenuState extends FlxState
 	private var texts : Array<TextWithCallback> = new Array<TextWithCallback>();
 	private var cursor : FlxSprite = new FlxSprite(220, 0, "assets/images/slimeIcon.png");
 	private var cursorCounter : Int = 0;
-	private var decoration : FlxSprite = new FlxSprite(400, 0, "assets/images/slimeKing.png");
+	
+	private var logo : FlxSprite = new FlxSprite(22, 15, "assets/images/menUI/menuLogo.png");
+	
+	private var but1 : FlxSprite = new FlxSprite(550, 40, "assets/images/menUI/button1.png");
+	private var but2 : FlxSprite = new FlxSprite(550, 125, "assets/images/menUI/button2.png");
+	private var but3 : FlxSprite = new FlxSprite(550, 200, "assets/images/menUI/button3.png");
+	
+	private var menuBack : FlxSprite = new FlxSprite(15, 15, "assets/images/menUI/menuLogo.png");
+	private var menuGround : FlxSprite = new FlxSprite(15, 15, "assets/images/menUI/menuLogo.png");
+	
+	private var menuChest : FlxSprite = new FlxSprite(15, 15, "assets/images/menUI/menuLogo.png");
+	private var menuSlimes : FlxSprite = new FlxSprite(15, 15, "assets/images/menUI/menuLogo.png");
 	
 	private static inline var yOffset : Int = 300;
 	private static inline var ySpacing : Int = 60;
@@ -39,8 +50,11 @@ class MenuState extends FlxState
 		updateCursorPos();
 		add(cursor);
 		
-		decoration.scale.x = decoration.scale.y = 0.5;
-		add(decoration);
+		add(logo);
+		
+		add(but1);
+		add(but2);
+		add(but3);
 		
 		FlxTween.tween(cursor, { angle : 360 }, 1.5, {type : FlxTween.LOOPING, ease : FlxEase.cubeInOut});
 		
