@@ -10,6 +10,8 @@ import items.Item;
 class Attacher extends FlxSprite
 {
 
+	public var hasItem : Bool = false;
+	
 	public function new(X : Float, Y : Float, ?SimpleGraphic : Dynamic) 
 	{
 		super(X, Y, SimpleGraphic);
@@ -21,6 +23,7 @@ class Attacher extends FlxSprite
 	public function attach(item : Item, group : FlxTypedGroup<Item>, offset : Float)
 	{
 		item.attach(this, group, offset);
+		hasItem = true;
 	}
 	
 	public function detach(item : Item)

@@ -1,5 +1,6 @@
 package items;
 
+import flixel.FlxObject;
 import flixel.group.FlxGroup;
 import flixel.group.FlxTypedGroup;
 import flixel.util.FlxPoint;
@@ -12,6 +13,7 @@ class Shield extends Item
 	{
 		super(X, Y, "assets/images/items/shield.png", collisionGroup, itemsGroup);
 		type = 1;
+		allowCollisions = FlxObject.RIGHT;
 	}
 	
 	override public function onOverlapSprite(otherSprite:FlxSprite, item:Item) 

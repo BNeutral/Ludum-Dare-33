@@ -48,7 +48,7 @@ class PercentDisplay extends FlxGroup
 	{
 		super.update();
 		var actualNumber : Int = Math.round((slimeCanvas.paintedAmount / requiredPaint) * 100);
-		if (actualNumber > 100) actualNumber = 100;
+		//if (actualNumber > 100) actualNumber = 100;
 		if (actualNumber != currentNumber)
 		{
 			currentNumber = actualNumber;

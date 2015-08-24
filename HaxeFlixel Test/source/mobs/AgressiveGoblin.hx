@@ -9,7 +9,10 @@ class AgressiveGoblin extends EdibleMob
 {
 	private var player : Player;
 	private static inline var minDist : Float = 320;
+	private static inline var maxDist : Float = 400;
 	private static inline var speed : Float = 240;
+	private static inline var swordLen : Float = 34;
+	
 	
 	public function new(X:Float, Y:Float, player : Player) 
 	{
@@ -26,28 +29,54 @@ class AgressiveGoblin extends EdibleMob
 	override public function update():Void 
 	{
 		var xDist : Float;
-		if (player.x < x) xDist = x - player.x;
+		if (player.x < x) xDist = x - (player.x + player.width);
 		else xDist = player.x - (x + width);
-		if (Util.spriteDistance(this, player) < minDist && xDist > player.width*1.4 && (player.y+player.height) > y)
+		var dist : Float = Util.spriteDistance(this, player);
+		
+		if (hasItem)
 		{
-			if (player.x < this.x) 
+			if (dist < minDist && xDist > swordLen && (player.y+player.height) > y)
 			{
-				this.velocity.x = -speed;
-				flipX = false;
+				if (player.x < this.x) 
+				{
+					this.velocity.x = -speed;
+					flipX = false;
+				}
+				else
+				{
+					this.velocity.x = speed;
+					flipX = true;
+				}
+				if (isTouching(FlxObject.WALL) && isTouching(FlxObject.FLOOR))
+				{
+					velocity.y = -600;
+				}
 			}
 			else
 			{
-				this.velocity.x = speed;
-				flipX = true;
-			}
-			if (isTouching(FlxObject.WALL) && isTouching(FlxObject.FLOOR))
-			{
-				velocity.y = -600;
+				velocity.x = 0;
 			}
 		}
 		else
 		{
-			velocity.x = 0;
+			if (dist < minDist)
+			{
+				if (player.x < this.x) 
+				{
+					this.velocity.x = speed/2;
+					flipX = true;
+				}
+				else
+				{
+					this.velocity.x = -speed/2;
+					flipX = false;
+				}
+				if (isTouching(FlxObject.WALL) && isTouching(FlxObject.FLOOR))
+				{
+					velocity.y = -600;
+				}
+			}
+			else if (dist > maxDist) velocity.x = 0;
 		}
 		
 		if (velocity.x != 0)

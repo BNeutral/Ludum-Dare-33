@@ -214,7 +214,7 @@ class PlayState extends FlxState
 	private function addHazard(hazard : Hazard) : Void
 	{
 		hazards.add(hazard);
-		layer2.add(hazard);
+		layer1.add(hazard);
 	}
 	
 	private function addEdible(edible : EdibleMob) : EdibleMob

@@ -1,4 +1,5 @@
 package items;
+import characters.Attacher;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
@@ -8,7 +9,7 @@ import openfl.display.BitmapData;
 
 class Item extends FlxSprite
 {
-	public var owner : FlxSprite = null;
+	public var owner : Attacher = null;
 	public var group : FlxTypedGroup<Item> = null;
 	public var angleOffset : Float = 0;
 	public var radius : Float = 0;
@@ -34,9 +35,10 @@ class Item extends FlxSprite
 	 * Makes the object attach itself to the target
 	 * @param	target
 	 */
-	public function attach(target : FlxSprite, group : FlxTypedGroup<Item>, customOffset : Float = 0) : Void
+	public function attach(target : Attacher, group : FlxTypedGroup<Item>, customOffset : Float = 0) : Void
 	{
 		owner = target;
+		owner.hasItem = true;
 		this.group = group;
 		collisionGroup.remove(this);
 		group.add(this);
@@ -50,6 +52,7 @@ class Item extends FlxSprite
 	 */
 	public function detach() : Void
 	{
+		if (owner != null) owner.hasItem = false;
 		group.remove(this);
 		collisionGroup.add(this);
 		itemsGroup.add(this);
@@ -73,7 +76,9 @@ class Item extends FlxSprite
 			if (owner.flipX)
 			{
 				flipY = false;
-				extraRot = 180;
+				extraRot = angleOffset % 360;
+				if (extraRot > 180) extraRot = 180 + 360 - extraRot - angleOffset;
+				else extraRot = 180 - extraRot - angleOffset;
 			}
 			else
 			{
