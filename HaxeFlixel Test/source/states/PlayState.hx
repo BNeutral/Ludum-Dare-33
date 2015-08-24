@@ -61,6 +61,7 @@ class PlayState extends FlxState
 	
 	private var levelNumber : Int;
 	private static var data : Xml = null;
+	private static var currentMusic : String;
 	
 	public function new(levelNumber : Int = -1, data : Xml = null)
 	{
@@ -90,7 +91,13 @@ class PlayState extends FlxState
 		
 		this.bgColor = 0xFFFFFFFF;
 
-		FlxG.sound.playMusic(Reg.getMusic(levelNumber));
+		var music : String = Reg.getMusic(levelNumber);
+		if (currentMusic != music) 
+		{
+			FlxG.sound.playMusic(music);
+			currentMusic = music;
+		}
+		
 		
 		var bg : FlxBackdrop = new FlxBackdrop("assets/images/bg.png", 1, 1, true, false);
 		bg.scrollFactor.x = 0.5;

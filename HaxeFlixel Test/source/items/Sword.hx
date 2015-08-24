@@ -19,6 +19,7 @@ class Sword extends Item
 	{
 		if (owner == null) return;
 		otherSprite.hurt(750 * FlxG.elapsed);
+		otherSprite.velocity.x = 0;
 	}
 	
 	
