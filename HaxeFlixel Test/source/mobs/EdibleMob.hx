@@ -1,4 +1,5 @@
-package characters;
+package mobs ;
+import characters.Attacher;
 import flixel.FlxSprite;
 
 class EdibleMob extends Attacher
@@ -7,8 +8,7 @@ class EdibleMob extends Attacher
 
 	public function new(X : Float, Y : Float) 
 	{
-		super(X, Y, "assets/images/slime.png");
-		color = 0xffff0000;
+		super(X, Y);
 		this.acceleration.y = Constants.gravity;
 		this.maxVelocity.y = 500;
 	}

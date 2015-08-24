@@ -1,7 +1,10 @@
 package states;
 
 import characters.Chest;
-import characters.EdibleMob;
+import hazards.Flower;
+import hazards.Hazard;
+import hazards.Spike;
+import mobs.EdibleMob;
 import characters.Owl;
 import characters.Sticker;
 import flixel.addons.display.FlxBackdrop;
@@ -46,6 +49,7 @@ class PlayState extends FlxState
 	private var edibles : FlxTypedGroup<EdibleMob>; // These can be eaten
 	private var items : FlxTypedGroup<Item>; // These can be eaten
 	private var playerItems : FlxTypedGroup<Item>; // These can be eaten
+	private var hazards : FlxTypedGroup<Hazard>; // These can be eaten
 	private var mapCollide : FlxTilemap;
 	private var slimeCanvas : SlimeCanvas;
 	private var counter : PercentDisplay;
@@ -77,6 +81,7 @@ class PlayState extends FlxState
 		edibles = new FlxTypedGroup<EdibleMob>();
 		items = new FlxTypedGroup<Item>();
 		playerItems = new FlxTypedGroup<Item>();
+		hazards = new FlxTypedGroup<Hazard>();
 		
 		this.bgColor = 0xFFFFFFFF;
 
@@ -90,7 +95,7 @@ class PlayState extends FlxState
 		var tiledMap : TiledMap;
 		if (data == null) 
 		{
-			tiledMap = new TiledMap("assets/data/template.tmx");
+			tiledMap = new TiledMap("assets/data/mobtestmap.tmx");
 		}
 		else
 		{
@@ -140,41 +145,42 @@ class PlayState extends FlxState
 		var totalTiles : Int = widthInTiles * heightInTiles;
 		
 		var owlCounter : Int = 0;
+		
+		var playerIndex = tiles.indexOf(496); // player;
+		var x : Int = (playerIndex % widthInTiles) * 40;
+		var y : Int = cast(playerIndex / widthInTiles,Int) * 40;
+				
+		player = new Player(x, y);
+		player.y -= player.height;
+		colliders.add(player);					
+		var emitter : SlimeEmitter = new SlimeEmitter(player, mapCollide, slimeCanvas);
+		
 		for (i in 0...totalTiles)
 		{
-			var x : Int = (i % widthInTiles) * 40;
-			var y : Int = cast(i / widthInTiles,Int) * 40;
+			x = (i % widthInTiles) * 40;
+			y = cast(i / widthInTiles,Int) * 40;
 			switch (tiles[i])
 			{
-				case 496: // P1
-					player = new Player(x, y);
-					player.y -= player.height;
-					layer2.add(new Sticker(player, "assets/images/slime_crown.png"));
-					layer2.add(player);
-					colliders.add(player);					
-					var emitter : SlimeEmitter = new SlimeEmitter(player, mapCollide, slimeCanvas);
-					layer2.add(emitter);
+				case 451: // Spike ^
+					addHazard(new Spike(x, y, "assets/images/hazards/spike1.png"));
+				case 452: // Spike >
+					addHazard(new Spike(x, y, "assets/images/hazards/spike2.png"));
+				case 453: // Spike <
+					addHazard(new Spike(x, y, "assets/images/hazards/spike3.png"));
+				case 454: // Spike v
+					addHazard(new Spike(x, y, "assets/images/hazards/spike4.png"));
 				case 497: // EXT
-					add(new Chest(x, y + 60, layer1, layer2, layer3, stageCollisionExtra, player, counter, wonLevel, 20));
+					add(new Chest(x, y + 65, layer1, layer2, layer3, stageCollisionExtra, player, counter, wonLevel, 20));
+				case 503: // Plant
+					addHazard(new Flower(x, y+40));
 				case 504: // Owl
 					layer1.add(new Owl(x, y - 107 + 40, levelNumber, owlCounter++));
 			}
 		}
 		
-		/*
-		var mob : EdibleMob = new EdibleMob(500, 400);
-		layer2.add(mob);
-		edibles.add(mob);
-		colliders.add(mob);
-	
-		var item : Item = new Item(200, 400);
-		layer2.add(item);
-		colliders.add(item);
-		items.add(item);
-		var item : Item = new Item(300, 400);
-		layer2.add(item);
-		colliders.add(item);
-		items.add(item);*/	
+		layer2.add(new Sticker(player, "assets/images/slime_crown.png"));
+		layer2.add(emitter);
+		layer2.add(player);
 	}
 
 	/**
@@ -185,6 +191,12 @@ class PlayState extends FlxState
 	{
 		super.destroy();
 		player.destroy();
+	}
+	
+	private function addHazard(hazard : Hazard) : Void
+	{
+		hazards.add(hazard);
+		layer2.add(hazard);
 	}
 	
 	/**
@@ -205,6 +217,7 @@ class PlayState extends FlxState
 		FlxG.collide(stageCollisionExtra, colliders);
 		FlxG.collide(player, edibles, eatMob);
 		FlxG.overlap(player, items, collideItem);
+		FlxG.overlap(player, hazards, overlapHazard);
 		holdTest();
 		
 		if (player.alive && (player.currentSize < 0.5 || !player.inWorldBounds()))
@@ -221,6 +234,11 @@ class PlayState extends FlxState
 		if (FlxG.keys.justPressed.ESCAPE) FlxG.switchState(new MenuState());
 		if (FlxG.keys.justPressed.R) FlxG.switchState(new PlayState());
 	}	
+	
+	private function overlapHazard(obj1 : Player, obj2 : Hazard) : Void
+	{
+		obj2.overlapsPlayer(obj1);
+	}
 	
 	/**
 	 * Function called when the player collides by an item held by no monster

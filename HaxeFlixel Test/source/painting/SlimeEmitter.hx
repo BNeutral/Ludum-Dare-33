@@ -46,7 +46,7 @@ class SlimeEmitter extends FlxEmitter
 	 */
 	private function checkPlayerStatus() : Void
 	{
-		if (!player.wasMoving)
+		if (!player.wasMoving || !player.alive)
 		{
 			this.on = false;
 		}
