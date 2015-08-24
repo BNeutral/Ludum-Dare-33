@@ -55,6 +55,7 @@ class Player extends Attacher
 		origHeight = height;
 		moveSound.loadEmbedded("assets/sounds/SlimeMovement.wav", true);
 		moveSound.play();
+		flipX = true;
 		
 	}
 	

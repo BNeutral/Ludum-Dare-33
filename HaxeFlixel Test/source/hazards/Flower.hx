@@ -6,7 +6,7 @@ class Flower extends Hazard
 
 	public function new(X : Float, Y : Float) 
 	{
-		super(X, Y - 178);
+		super(X, Y - 150);
 		loadGraphic("assets/images/hazards/Enemy3 - Plant1 (146x184).png", true, 146, 184);
 		animation.add("wiggle", [2, 3], 4, true);
 		animation.add("slimeWiggle", [0, 1], 4, true);

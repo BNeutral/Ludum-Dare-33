@@ -1,6 +1,7 @@
 package characters;
 import flixel.addons.display.FlxNestedSprite;
 import flixel.FlxSprite;
+import flixel.group.FlxTypedGroup;
 import items.Item;
 
 /**
@@ -17,9 +18,9 @@ class Attacher extends FlxSprite
 	/**
 	 * Attaches an item
 	 */
-	public function attach(item : Item, offset : Float)
+	public function attach(item : Item, group : FlxTypedGroup<Item>, offset : Float)
 	{
-		item.attach(this);
+		item.attach(this, group, offset);
 	}
 	
 	public function detach(item : Item)

@@ -4,6 +4,9 @@ import characters.Chest;
 import hazards.Flower;
 import hazards.Hazard;
 import hazards.Spike;
+import items.Shield;
+import items.Sword;
+import mobs.AgressiveGoblin;
 import mobs.EdibleMob;
 import characters.Owl;
 import characters.Sticker;
@@ -30,6 +33,8 @@ import flixel.util.FlxCollision;
 import flixel.util.FlxMath;
 import flixel.util.FlxPoint;
 import lime.utils.ByteArray;
+import mobs.ShyGoblin;
+import mobs.StandingGoblin;
 import painting.SlimeCanvas;
 import painting.SlimeEmitter;
 import ui.PercentDisplay;
@@ -55,13 +60,13 @@ class PlayState extends FlxState
 	private var counter : PercentDisplay;
 	
 	private var levelNumber : Int;
-	private var data : Xml = null;
+	private static var data : Xml = null;
 	
 	public function new(levelNumber : Int = -1, data : Xml = null)
 	{
 		super();
 		this.levelNumber = levelNumber;
-		this.data = data;
+		if (data != null) PlayState.data = data;
 	}
 	
 	/**
@@ -93,7 +98,7 @@ class PlayState extends FlxState
 		add(bg);
 				
 		var tiledMap : TiledMap;
-		if (data == null) 
+		if (data == null || levelNumber != -1) 
 		{
 			tiledMap = new TiledMap("assets/data/mobtestmap.tmx");
 		}
@@ -124,7 +129,9 @@ class PlayState extends FlxState
 		
 		add(layer1);
 		add(layer2);
-		add(layer3);
+		add(items);
+		add(playerItems);
+		add(layer3);		
 		
 		counter = new PercentDisplay(40000, slimeCanvas);
 		add(counter);
@@ -155,6 +162,7 @@ class PlayState extends FlxState
 		colliders.add(player);					
 		var emitter : SlimeEmitter = new SlimeEmitter(player, mapCollide, slimeCanvas);
 		
+		var edible : EdibleMob;
 		for (i in 0...totalTiles)
 		{
 			x = (i % widthInTiles) * 40;
@@ -169,8 +177,18 @@ class PlayState extends FlxState
 					addHazard(new Spike(x, y, "assets/images/hazards/spike3.png"));
 				case 454: // Spike v
 					addHazard(new Spike(x, y, "assets/images/hazards/spike4.png"));
-				case 497: // EXT
+				case 497: // Exit chest
 					add(new Chest(x, y + 65, layer1, layer2, layer3, stageCollisionExtra, player, counter, wonLevel, 20));
+				case 498: // Shy Goblin
+					addEdible(new ShyGoblin(x, y + 40, player));					
+				case 499: // Shield Goblin
+					edible = addEdible(new StandingGoblin(x, y + 40));
+					var shield : Shield = new Shield(x, y, colliders, items);
+					shield.attach(edible, items, 180);
+				case 500: // Sword Goblin
+					edible = addEdible(new AgressiveGoblin(x, y + 40, player));
+					var sword : Sword = new Sword(x, y, colliders, items);
+					sword.attach(edible, items, 160);
 				case 503: // Plant
 					addHazard(new Flower(x, y+40));
 				case 504: // Owl
@@ -199,6 +217,14 @@ class PlayState extends FlxState
 		layer2.add(hazard);
 	}
 	
+	private function addEdible(edible : EdibleMob) : EdibleMob
+	{
+		edibles.add(edible);
+		colliders.add(edible);
+		layer2.add(edible);
+		return edible;
+	}
+	
 	/**
 	 * Function to be called when you clear a level
 	 */
@@ -215,8 +241,9 @@ class PlayState extends FlxState
 		super.update();
 		FlxG.collide(mapCollide, colliders);
 		FlxG.collide(stageCollisionExtra, colliders);
-		FlxG.collide(player, edibles, eatMob);
-		FlxG.overlap(player, items, collideItem);
+		FlxG.overlap(player, edibles, eatMob);
+		FlxG.overlap(player, items, collideItemWithPlayer);
+		FlxG.overlap(playerItems, items, collideItemWithItem);
 		FlxG.overlap(player, hazards, overlapHazard);
 		holdTest();
 		
@@ -245,14 +272,33 @@ class PlayState extends FlxState
 	 * @param	obj1
 	 * @param	obj2
 	 */
-	private function collideItem(obj1 : Player, obj2 : Item) : Void
+	private function collideItemWithPlayer(obj1 : Player, obj2 : Item) : Void
 	{
-		if (obj2.owner == null) 
+		if (obj2.owner == null && obj2.detachThreshold < obj1.currentSize) 
 		{
-			obj1.attach(obj2, 20);
-			colliders.remove(obj2);
+			obj1.attach(obj2, playerItems, 20);
 			items.remove(obj2);
-			playerItems.add(obj2);
+		}
+		else
+		{
+			obj2.onOverlapSprite(player, obj2);
+		}
+	}
+	
+	/**
+	 * Function called when the player items collide with enemy items
+	 * @param	obj1
+	 * @param	obj2
+	 */
+	private function collideItemWithItem(obj1 : Item, obj2 : Item) : Void
+	{
+		if (obj2.owner == null)
+		{
+			return;
+		}
+		else
+		{
+			obj1.onOverlapItem(obj2, obj1);
 		}
 	}
 	

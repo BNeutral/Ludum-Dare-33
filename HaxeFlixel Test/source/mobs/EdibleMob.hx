@@ -13,4 +13,14 @@ class EdibleMob extends Attacher
 		this.maxVelocity.y = 500;
 	}
 	
+	override public function hurt(Damage:Float):Void 
+	{
+		//super.hurt(Damage);
+	}
+	
+	override public function update():Void 
+	{
+		super.update();
+		if (!inWorldBounds()) kill();
+	}
 }

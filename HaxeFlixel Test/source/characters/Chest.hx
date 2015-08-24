@@ -2,6 +2,7 @@ package characters;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
+import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import openfl.display.BitmapData;
@@ -55,6 +56,11 @@ class Chest extends FlxGroup
 		top.add(chest3);
 		top.add(chest5);
 		top.add(chest4);
+		
+		var text : FlxText = new FlxText(X + 260, Y - 349 +26, 50, "" + counterThreshold + "%", 16, true);
+		text.font = "assets/fonts/DJB Speak Softly.ttf";
+		text.color = 0x00A000;
+		top.add(text);
 		
 		chest2.height = 240;
 		chest2.width = 150;
