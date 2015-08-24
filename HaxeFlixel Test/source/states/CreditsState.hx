@@ -8,6 +8,8 @@ import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
 import flash.Lib;
 import flash.net.URLRequest;
+import flash.net.FileReference;
+import flash.events.Event;
 
 /**
  * Shows the credits
@@ -71,11 +73,35 @@ class CreditsState extends FlxState
 	override public function update():Void 
 	{
 		super.update();
+		
+		if (FlxG.keys.justPressed.F12)
+		{
+			fileCall();
+		}
 	}
 	
 	private function exit() : Void
 	{
 		if (FlxG.keys.justPressed.ESCAPE) FlxG.switchState(new MenuState());
 	}
+	
+	private var file : FileReference;
+	private function fileCall () : Void
+	{
+		file = new FileReference();
+		file.browse();
+		file.addEventListener(Event.SELECT, dialogueFileSelect);
+	}
+	
+	private function dialogueFileSelect (event : Event) : Void 
+	{
+		file.addEventListener(Event.COMPLETE, dialogueLoadComplete);
+		file.load();
+	}
+
+	private function dialogueLoadComplete (event : Event) : Void 
+	{
+		FlxG.switchState(new PlayState(0, Xml.parse(file.data.toString())));
+	}	
 	
 }

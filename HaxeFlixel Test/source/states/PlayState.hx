@@ -4,6 +4,7 @@ import characters.Chest;
 import characters.EdibleMob;
 import characters.Owl;
 import characters.Sticker;
+import flixel.addons.display.FlxBackdrop;
 import flixel.tweens.FlxEase;
 import flixel.util.FlxRect;
 import items.Item;
@@ -25,6 +26,7 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxCollision;
 import flixel.util.FlxMath;
 import flixel.util.FlxPoint;
+import lime.utils.ByteArray;
 import painting.SlimeCanvas;
 import painting.SlimeEmitter;
 import ui.PercentDisplay;
@@ -49,11 +51,13 @@ class PlayState extends FlxState
 	private var counter : PercentDisplay;
 	
 	private var levelNumber : Int;
+	private var data : Xml = null;
 	
-	public function new(levelNumber : Int = 0)
+	public function new(levelNumber : Int = -1, data : Xml = null)
 	{
 		super();
 		this.levelNumber = levelNumber;
+		this.data = data;
 	}
 	
 	/**
@@ -78,9 +82,20 @@ class PlayState extends FlxState
 
 		FlxG.sound.playMusic("assets/music/Compressed/Stage 1 (Comp).mp3");
 		
-		add(new FlxSprite(0, 0, "assets/images/bg.png"));
+		var bg : FlxBackdrop = new FlxBackdrop("assets/images/bg.png", 1, 1, true, false);
+		bg.scrollFactor.x = 0.5;
+		bg.scrollFactor.y = 0;
+		add(bg);
 				
-		var tiledMap : TiledMap = new TiledMap("assets/data/template.tmx");
+		var tiledMap : TiledMap;
+		if (data == null) 
+		{
+			tiledMap = new TiledMap("assets/data/template.tmx");
+		}
+		else
+		{
+			tiledMap = new TiledMap(data);
+		}
 		var flxMapBG1 : FlxTilemap	= new FlxTilemap();
 		var flxMapBG2 : FlxTilemap	= new FlxTilemap();
 		var flxMapBG3 : FlxTilemap	= new FlxTilemap();
