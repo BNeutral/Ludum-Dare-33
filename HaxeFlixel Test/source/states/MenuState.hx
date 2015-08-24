@@ -23,18 +23,20 @@ class MenuState extends FlxState
 	
 	private var logo : FlxSprite = new FlxSprite(22, 15, "assets/images/menUI/menuLogo.png");
 	
-	private var but1 : FlxSprite = new FlxSprite(550, 40, "assets/images/menUI/button1.png");
-	private var but2 : FlxSprite = new FlxSprite(550, 125, "assets/images/menUI/button2.png");
-	private var but3 : FlxSprite = new FlxSprite(550, 200, "assets/images/menUI/button3.png");
+	private var but1 : FlxSprite = new FlxSprite(570, 20, "assets/images/menUI/button1.png");
+	private var but2 : FlxSprite = new FlxSprite(550, 105, "assets/images/menUI/button2.png");
+	private var but3 : FlxSprite = new FlxSprite(570, 180, "assets/images/menUI/button3.png");
 	
-	private var menuBack : FlxSprite = new FlxSprite(15, 15, "assets/images/menUI/menuLogo.png");
-	private var menuGround : FlxSprite = new FlxSprite(15, 15, "assets/images/menUI/menuLogo.png");
+	private var menuBack : FlxSprite = new FlxSprite(0, 0, "assets/images/menUI/menuBackdrop.png");
+	private var menuGround : FlxSprite = new FlxSprite(0, 430, "assets/images/menUI/menuGround.png");
 	
-	private var menuChest : FlxSprite = new FlxSprite(15, 15, "assets/images/menUI/menuLogo.png");
-	private var menuSlimes : FlxSprite = new FlxSprite(15, 15, "assets/images/menUI/menuLogo.png");
+	private var menuChest : FlxSprite = new FlxSprite(390, 265, "assets/images/menUI/menuChest.png");
+	private var menuSlimes : FlxSprite = new FlxSprite(15, 15, "assets/images/menUI/menuSlimes.png");
 	
 	private static inline var yOffset : Int = 300;
 	private static inline var ySpacing : Int = 60;
+	
+	
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -47,8 +49,14 @@ class MenuState extends FlxState
 		//addOption("CONTROLS", function(){ FlxG.switchState(new ControlsState()); } );
 		addOption("CREDITS", function() { FlxG.switchState(new CreditsState()); } );
 		
+		this.bgColor = 0xFFCBF1E4;
+		FlxG.sound.playMusic("assets/music/Compressed/Menu Theme.mp3");
+		
 		updateCursorPos();
 		add(cursor);
+		
+		add(menuBack);
+		add(menuGround);
 		
 		add(logo);
 		
@@ -56,9 +64,9 @@ class MenuState extends FlxState
 		add(but2);
 		add(but3);
 		
+		add (menuChest);
+		
 		FlxTween.tween(cursor, { angle : 360 }, 1.5, {type : FlxTween.LOOPING, ease : FlxEase.cubeInOut});
-		
-		
 		
 		FlxG.mouse.visible = false;
 	}
