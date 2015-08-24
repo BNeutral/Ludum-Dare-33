@@ -24,15 +24,15 @@ class CreditsState extends FlxState
 	override public function create():Void 
 	{
 		super.create();
+		bgColor = 0x000000;
 		FlxG.mouse.visible = true;
 		addText("BNeutral - Programming");
 		addButton(" '- Twitter", "http://twitter.com/bneutral");
 		addButton(" '- Tumblr", "http://bneutral.tumblr.com");
-		addText("A_C - Additional programming");
-		addText("...and moral support");
+		addText("A_C - Additional programming ... and moral support");
 		addText("Gats - Art");
 		addButton(" '- Twitter", "http://bneutral.tumblr.com");
-		addText("Geistbox - Music");
+		addText("Plumegeist - Music");
 		addButton(" '- Twitter", "https://twitter.com/geistbox");
 		addButton(" '- Tumblr", "http://geistbox.tumblr.com/");
 		addButton(" '- Bandcamp", "http://plumegeist.bandcamp.com/");
@@ -67,7 +67,7 @@ class CreditsState extends FlxState
 	 */
 	private function addButton(text : String, url : String) : Void
 	{
-		var button : ClickableText = new ClickableText(function(){ Lib.getURL(new URLRequest(url)); }, -FlxG.width, spacing * texts.length, 240, text, size);
+		var button : ClickableText = new ClickableText(function(){ Lib.getURL(new URLRequest(url)); }, -FlxG.width, spacing * texts.length, 300, text, size);
 		add(button);
 		texts.push(button);
 	}

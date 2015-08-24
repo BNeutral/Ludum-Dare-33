@@ -1,5 +1,6 @@
 package ui ;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import painting.SlimeCanvas;
@@ -13,6 +14,7 @@ class PercentDisplay extends FlxGroup
 	private var requiredPaint : Int = 0;
 	public var currentNumber : Int = 0;
 	private var slimeCanvas : SlimeCanvas;
+	private var playedSound : Bool = false;
 
 	private static var route : String = "assets/images/numbers/";
 	private static var strNUmbers : Array<String> = ["0.png", "1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png"];
@@ -48,7 +50,15 @@ class PercentDisplay extends FlxGroup
 	{
 		super.update();
 		var actualNumber : Int = Math.round((slimeCanvas.paintedAmount / requiredPaint) * 100);
-		//if (actualNumber > 100) actualNumber = 100;
+		if (actualNumber >= 100) 
+		{
+			//actualNumber = 100;
+			if (!playedSound)
+			{
+				FlxG.sound.play("assets/sounds/100%.mp3");
+				playedSound = true;
+			}
+		}
 		if (actualNumber != currentNumber)
 		{
 			currentNumber = actualNumber;

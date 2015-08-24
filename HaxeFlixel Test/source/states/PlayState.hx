@@ -90,7 +90,7 @@ class PlayState extends FlxState
 		
 		this.bgColor = 0xFFFFFFFF;
 
-		FlxG.sound.playMusic("assets/music/Compressed/Stage 1 (Comp).mp3");
+		FlxG.sound.playMusic(Reg.getMusic(levelNumber));
 		
 		var bg : FlxBackdrop = new FlxBackdrop("assets/images/bg.png", 1, 1, true, false);
 		bg.scrollFactor.x = 0.5;
@@ -133,7 +133,7 @@ class PlayState extends FlxState
 		add(playerItems);
 		add(layer3);		
 		
-		counter = new PercentDisplay(40000, slimeCanvas);
+		counter = new PercentDisplay(Reg.getSlimeNeeded(levelNumber), slimeCanvas);
 		add(counter);
 		
 		loadCharsFromTilemap(tiledMap.getLayer("PCs").tileArray, tiledMap.width, tiledMap.height);
@@ -230,7 +230,13 @@ class PlayState extends FlxState
 	 */
 	private function wonLevel()
 	{
-		FlxG.switchState(new MenuState());
+		if (levelNumber > Reg.lastClearedLevel) Reg.lastClearedLevel = levelNumber;
+		if (levelNumber >= (Reg.levels.length - 1)) 
+		{
+			Reg.wonTheGame = true;
+			FlxG.switchState(new WinState());
+		}
+		FlxG.switchState(new PlayState(levelNumber+1));
 	}
 
 	/**
@@ -250,6 +256,7 @@ class PlayState extends FlxState
 		if (player.alive && (player.currentSize < 0.5 || !player.inWorldBounds()))
 		{
 			player.kill();
+			FlxG.sound.play("assets/sounds/SlimeDie.mp3");
 			var gameOver : FlxSprite = new FlxSprite(0, 0, "assets/images/UI/GameOverLay.png");
 			gameOver.y = -gameOver.height;
 			gameOver.x = FlxG.width / 2 - gameOver.width / 2;
@@ -278,6 +285,7 @@ class PlayState extends FlxState
 		{
 			obj1.attach(obj2, playerItems, 20);
 			items.remove(obj2);
+			FlxG.sound.play("assets/sounds/ItemGain.mp3");
 		}
 		else
 		{
@@ -309,6 +317,7 @@ class PlayState extends FlxState
 	 */
 	private function eatMob(obj1 : Player, obj2 : EdibleMob) : Void
 	{
+		FlxG.sound.play("assets/sounds/SlimeAbsorb.mp3");
 		obj1.addMass(obj2.eatMass);
 		obj2.kill();
 		remove(obj2);

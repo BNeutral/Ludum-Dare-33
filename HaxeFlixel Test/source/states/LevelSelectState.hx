@@ -14,7 +14,7 @@ import openfl.display.BitmapData;
 class LevelSelectState extends FlxState
 {
 	private var texts : Array<TextWithCallback> = new Array<TextWithCallback>();
-	private var cursor : FlxSprite = new FlxSprite(220, 0, new BitmapData(32, 32));
+	private var cursor : FlxSprite = new FlxSprite(220, 0, "assets/images/slimeIcon.png");
 	private var cursorCounter : Int = 0;
 	
 	private static inline var yOffset : Int = 300;

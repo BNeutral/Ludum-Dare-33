@@ -29,7 +29,10 @@ class Shield extends Item
 	{
 		if (owner == null) return;
 		super.onOverlapItem(otherItem, item);
-		if (otherItem.type == 2) otherItem.detach();
+		if (otherItem.type == 2) 
+		{
+			otherItem.detach();
+		}
 	}
 	
 }

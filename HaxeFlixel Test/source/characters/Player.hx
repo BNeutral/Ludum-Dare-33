@@ -38,6 +38,7 @@ class Player extends Attacher
 	public var currentSize : Float = 1;
 	
 	private var moveSound : FlxSound = new FlxSound();
+	private var hurtSound : FlxSound = new FlxSound();
 	
 	private var invuln : Bool = false;
 	
@@ -53,7 +54,8 @@ class Player extends Attacher
 		height -= height / 3;		
 		origWidth = width;
 		origHeight = height;
-		moveSound.loadEmbedded("assets/sounds/SlimeMovement.wav", true);
+		moveSound.loadEmbedded("assets/sounds/SlimeMovement.mp3", true);
+		hurtSound.loadEmbedded("assets/sounds/SlimeDamage.mp3", false, false);
 		moveSound.play();
 		flipX = true;
 		
@@ -72,6 +74,7 @@ class Player extends Attacher
 		if (Damage > 0)
 		{
 			FlxTween.color(this, 0.2, 0xFF0000, 0xFFFFFF, 1, 1, { type : FlxTween.ONESHOT } );
+			hurtSound.play(false);
 		}
 	}
 		
@@ -229,6 +232,7 @@ class Player extends Attacher
 		{
 			velocity.y += gravityVector.y * jumpMultiplier * currentSize;
 			velocity.x -= gravityVector.x * jumpMultiplier * currentSize;
+			FlxG.sound.play("assets/sounds/SlimeJump.mp3");
 		}
 		
 		wasTouchingFloor = isTouching(FlxObject.FLOOR);

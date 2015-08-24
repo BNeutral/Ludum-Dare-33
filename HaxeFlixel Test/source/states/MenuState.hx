@@ -18,7 +18,7 @@ import openfl.display.BitmapData;
 class MenuState extends FlxState
 {
 	private var texts : Array<TextWithCallback> = new Array<TextWithCallback>();
-	private var cursor : FlxSprite = new FlxSprite(220, 0, "assets/images/slimeIcon.png");
+	private var cursor : FlxSprite = new FlxSprite(500, 0, "assets/images/slimeIcon.png");
 	private var cursorCounter : Int = 0;
 	
 	private var logo : FlxSprite = new FlxSprite(22, 15, "assets/images/menUI/menuLogo.png");
@@ -33,8 +33,8 @@ class MenuState extends FlxState
 	private var menuChest : FlxSprite = new FlxSprite(395, 265, "assets/images/menUI/menuChest.png");
 	private var menuSlimes : FlxSprite = new FlxSprite(310, 440, "assets/images/menUI/menuSlimes.png");
 	
-	private static inline var yOffset : Int = 300;
-	private static inline var ySpacing : Int = 60;
+	private static inline var yOffset : Int = 50;
+	private static inline var ySpacing : Int = 80;
 	
 	
 	
@@ -67,6 +67,10 @@ class MenuState extends FlxState
 		updateCursorPos();
 		add(cursor);
 		
+		var txt : FlxText = new FlxText(0, FlxG.height - 36, FlxG.width, "A game made in 72 hours for Ludum Dare 33", 24);
+		txt.alignment = "center";
+		add(txt);
+		
 		FlxTween.tween(cursor, { angle : 360 }, 1.5, {type : FlxTween.LOOPING, ease : FlxEase.cubeInOut});
 		
 		FlxG.mouse.visible = false;
@@ -87,11 +91,13 @@ class MenuState extends FlxState
 		{
 			--cursorCounter;
 			updateCursorPos();
+			FlxG.sound.play("assets/sounds/MenuSelect.mp3");
 		}
 		if (FlxG.keys.justPressed.DOWN)
 		{
 			++cursorCounter;
 			updateCursorPos();
+			FlxG.sound.play("assets/sounds/MenuSelect.mp3");
 		}
 		if (FlxG.keys.justPressed.ENTER) texts[cursorCounter].callback();
 	}
