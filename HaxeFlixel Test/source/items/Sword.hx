@@ -18,10 +18,7 @@ class Sword extends Item
 	override public function onOverlapSprite(otherSprite:FlxSprite, item:Item) 
 	{
 		if (owner == null) return;
-		otherSprite.hurt(300 * FlxG.elapsed);
-		var point : FlxPoint = Util.spriteCenterNormalizedSubstraction(this, otherSprite);			
-		otherSprite.velocity.x = point.x * Constants.pushForce / 2;
-		otherSprite.velocity.y = point.y * Constants.pushForce / 2;
+		otherSprite.hurt(750 * FlxG.elapsed);
 	}
 	
 	

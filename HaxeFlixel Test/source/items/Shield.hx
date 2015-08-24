@@ -14,6 +14,7 @@ class Shield extends Item
 		super(X, Y, "assets/images/items/shield.png", collisionGroup, itemsGroup);
 		type = 1;
 		allowCollisions = FlxObject.RIGHT;
+		detachThreshold = 0.9;
 	}
 	
 	override public function onOverlapSprite(otherSprite:FlxSprite, item:Item) 

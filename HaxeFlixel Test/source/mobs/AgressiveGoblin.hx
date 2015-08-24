@@ -11,7 +11,7 @@ class AgressiveGoblin extends EdibleMob
 	private static inline var minDist : Float = 320;
 	private static inline var maxDist : Float = 400;
 	private static inline var speed : Float = 240;
-	private static inline var swordLen : Float = 34;
+	private static inline var swordLen : Float = 36;
 	
 	
 	public function new(X:Float, Y:Float, player : Player) 
@@ -35,18 +35,13 @@ class AgressiveGoblin extends EdibleMob
 		
 		if (hasItem)
 		{
-			if (dist < minDist && xDist > swordLen && (player.y+player.height) > y)
+			if (dist < minDist && (player.y+player.height) > y && xDist > swordLen)
 			{
 				if (player.x < this.x) 
-				{
 					this.velocity.x = -speed;
-					flipX = false;
-				}
 				else
-				{
 					this.velocity.x = speed;
-					flipX = true;
-				}
+				
 				if (isTouching(FlxObject.WALL) && isTouching(FlxObject.FLOOR))
 				{
 					velocity.y = -600;
