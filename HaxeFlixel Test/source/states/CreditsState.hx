@@ -31,14 +31,13 @@ class CreditsState extends FlxState
 		addButton(" '- Tumblr", "http://bneutral.tumblr.com");
 		addText("A_C - Additional programming ... and moral support");
 		addText("Gats - Art");
-		addButton(" '- Twitter", "http://bneutral.tumblr.com");
+		addButton(" '- Twitter", "http://twitter.com/acgats");
+		addButton(" '- Tumblr (NSFW)", "http://nougats.tumblr.com");
 		addText("Plumegeist - Music");
 		addButton(" '- Twitter", "https://twitter.com/geistbox");
 		addButton(" '- Tumblr", "http://geistbox.tumblr.com/");
 		addButton(" '- Bandcamp", "http://plumegeist.bandcamp.com/");
 		addButton(" '- Soundcloud", "http://soundcloud.com/plumegeist");
-		addText("John Doe - A bit of level design");
-		addButton(" '- Tumblr (NSFW)", "http://johndoe-art.tumblr.com/");
 		
 		var exitButton : ClickableText = new ClickableText(function() { FlxG.switchState(new MenuState()); }, 12, FlxG.height - 32 , 100, "< Title (Esc)", size);
 		add(exitButton);

@@ -282,7 +282,11 @@ class PlayState extends FlxState
 			FlxTween.tween(gameOver, { y : (FlxG.height/2 - gameOver.height/2) } , 1, { ease : FlxEase.bounceOut } );
 		}
 		
-		if (FlxG.keys.justPressed.ESCAPE) FlxG.switchState(new MenuState());
+		if (FlxG.keys.justPressed.ESCAPE) 
+		{
+			currentMusic = null;
+			FlxG.switchState(new MenuState());
+		}
 		if (FlxG.keys.justPressed.R) FlxG.switchState(new PlayState(levelNumber));
 	}	
 	

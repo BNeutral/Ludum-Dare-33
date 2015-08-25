@@ -11,12 +11,12 @@ class WinState extends FlxState
 {
 	private var timeCounter : Float = 0;
 
-	public function new() 
+	override public function create():Void 
 	{
-		super();
+		super.create();
 		bgColor = 0xFFFFFF;
 		
-		FlxG.sound.playMusic("assets/music/Game Win.mp3");
+		FlxG.sound.playMusic("assets/music/Compressed/Game Win.mp3");
 		
 		add(new FlxSprite(0, 0, "assets/images/menUI/winFog.png"));
 		add(new FlxSprite(0, 0, "assets/images/menUI/winBase.png"));
@@ -25,15 +25,15 @@ class WinState extends FlxState
 		add(new FlxSprite(0, 0, "assets/images/menUI/winGround.png"));
 		add(new FlxSprite(0, 0, "assets/images/menUI/winSlimes.png"));		
 		
-		var text: FlxText = new FlxText(0, -30, FlxG.width, "YOU WIN!", 42, true);
+		var text1: FlxText = new FlxText(0, -30, FlxG.width, "YOU WIN!", 42, true);
+		text1.font = "assets/fonts/DJB Speak Softly.ttf";
+		FlxTween.tween(text1, { y : 300 }, 2, { ease : FlxEase.bounceOut } );
+		text1.color = 0x000000;
+		text1.alignment = "center";
+		add(text1);
+		var text : FlxText = new FlxText(0, -30, FlxG.width, "Thank you for playing.", 42, true);
 		text.font = "assets/fonts/DJB Speak Softly.ttf";
-		FlxTween.tween(text, { y : 100 }, 1, { ease : FlxEase.bounceOut } );
-		text.color = 0x000000;
-		text.alignment = "center";
-		add(text);
-		text = new FlxText(0, -30, FlxG.width, "Thank you for playing.", 42, true);
-		text.font = "assets/fonts/DJB Speak Softly.ttf";
-		FlxTween.tween(text, { y : 500 }, 1, { ease : FlxEase.bounceOut } );
+		FlxTween.tween(text, { y : 500 }, 2, { ease : FlxEase.bounceOut } );
 		text.color = 0x000000;
 		text.alignment = "center";
 		add(text);

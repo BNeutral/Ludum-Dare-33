@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="15" tilewidth="40" tileheight="40" nextobjectid="1">
- <tileset firstgid="1" name="Tileset" tilewidth="40" tileheight="40" tilecount="540">
+<map version="1.0" orientation="orthogonal" width="40" height="15" tilewidth="40" tileheight="40">
+ <tileset firstgid="1" name="Tileset" tilewidth="40" tileheight="40">
   <image source="../images/tileset.png" width="1800" height="480"/>
  </tileset>
  <layer name="Bg1" width="40" height="15">
@@ -25,7 +25,7 @@
  </layer>
  <layer name="PCs" width="40" height="15">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUkAJ+MA60C4Yu+EDHsPs4Gk+jYBiA74y0oUcB7QEAx8cNhQ==
+   eJxjYBgFo2AUkAJ+MA60C4Yu+ECHsPs4Gj+jYBiB74y0oUcB7QEAz1cNhQ==
   </data>
  </layer>
 </map>
