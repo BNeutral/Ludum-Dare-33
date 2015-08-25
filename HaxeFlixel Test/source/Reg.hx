@@ -77,8 +77,7 @@ class Reg
 			"Hoot! Everything the slime touches belongs to you, hm? But you don't want to touch those flowers? Well, I understand."];
 			
 	public static var levelSlimeTargets:Array<Int> = [
-		12000, 16000, 12000, 20000, 16000, 1,1,1, 1
-		
+		12000, 16000, 12000, 20000, 16000, 4000, 4000, 30000, 20000, 20000, 1		
 		];
 	
 	/**

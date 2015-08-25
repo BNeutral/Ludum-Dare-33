@@ -20,12 +20,12 @@
  </layer>
  <layer name="Solid Tiles" width="150" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt2MsKgCAQhWErjB6nFr3/q1VQIENKeMnJ/g/OJixcnIasM8Z0ngCxjv4MtTeB5tArlECvUAK9Qgn0CiVw9mvPtGdxslbYA/PqmzR0J+SaV70IdHD7o607IfwTrU/77IlBr97z1dkTg17l96f++NCrdHbPWHsTyvh6JSO/61OS8sy7e3PvzyU7Y8817rXZcKaWnvbqTwn1+G5dS/9qrvcmNRtbpwXl
+   eJzt2MsKgCAQhWErjB6nFr3/q1VQIENKeMmx/g/OJixcnIasM8Z0ngCxjv4MtTeBz6FXKIFeoQR6hRLoFUrg7Pc9057FyVphD8yrNmnoTsg1r3oR6OD2R1t3QvgnWp/22RODXr2n1dkTg17l96f++NCrdHbPWHsTyvh6JSO/61OS8sy7e3PvzyU7Y8817rXZcKaWnvbqTwn1+G5dK/9qrnfijWxiiwX3
   </data>
  </layer>
  <layer name="PCs" width="150" height="15">
   <data encoding="base64" compression="zlib">
-   eJzt1jEOgCAMAED4/7P8kLrI6GQ0jGXAhruEBZYS2tJSAACAjFqdHQGjLm9I0JM7Z4Ic2muOOFei9xCVqffwL/oOI+QPzNPXXz8LZD2PMgMRsdV39XtfK/93x8J3Z54bZEwkhw==
+   eJzt1jEOgCAMBVC4/7G8kLro6GCMSUc6YON7CQssDXyatgYAAFR09tkVkHV4QwY92dkLZGjtNer8C32HjEq9h2/Re8iQH5gn/r84C1Q9H2UGYsTS3xX3uG3uggkuD6Ajjw==
   </data>
  </layer>
 </map>
