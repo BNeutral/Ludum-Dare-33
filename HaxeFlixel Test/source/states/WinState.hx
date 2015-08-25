@@ -29,11 +29,13 @@ class WinState extends FlxState
 		text.font = "assets/fonts/DJB Speak Softly.ttf";
 		FlxTween.tween(text, { y : 100 }, 1, { ease : FlxEase.bounceOut } );
 		text.color = 0x000000;
+		text.alignment = "center";
 		add(text);
 		text = new FlxText(0, -30, FlxG.width, "Thank you for playing.", 42, true);
 		text.font = "assets/fonts/DJB Speak Softly.ttf";
 		FlxTween.tween(text, { y : 500 }, 1, { ease : FlxEase.bounceOut } );
 		text.color = 0x000000;
+		text.alignment = "center";
 		add(text);
 	}
 	

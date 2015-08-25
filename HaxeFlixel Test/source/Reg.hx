@@ -30,7 +30,7 @@ class Reg
 	public static function getSlimeNeeded(index : Int) : Int
 	{
 		if (index >= 0 && index < Reg.levelSlimeTargets.length) return levelSlimeTargets[index];
-		else return 40000;
+		else return 1;
 	}
 
 	public static var wonTheGame : Bool = false;
@@ -77,6 +77,7 @@ class Reg
 			"Hoot! Everything the slime touches belongs to you, hm? But you don't want to touch those flowers? Well, I understand."];
 			
 	public static var levelSlimeTargets:Array<Int> = [
+		12000, 16000, 12000, 20000, 16000, 1,1,1, 1
 		
 		];
 	

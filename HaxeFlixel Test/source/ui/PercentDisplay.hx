@@ -52,7 +52,7 @@ class PercentDisplay extends FlxGroup
 		var actualNumber : Int = Math.round((slimeCanvas.paintedAmount / requiredPaint) * 100);
 		if (actualNumber >= 100) 
 		{
-			//actualNumber = 100;
+			actualNumber = 100;
 			if (!playedSound)
 			{
 				FlxG.sound.play("assets/sounds/100%.mp3");

@@ -18,7 +18,7 @@ class LevelSelectState extends FlxState
 	private var cursorCounter : Int = 0;
 	
 	private static inline var yOffset : Int = 0;
-	private static inline var ySpacing : Int = 40;
+	private static inline var ySpacing : Int = 42;
 	
 	var numberLevels : Int = 0;
 	
@@ -30,7 +30,7 @@ class LevelSelectState extends FlxState
 		numberLevels = Reg.levels.length;
 		for (i in 0...numberLevels)
 		{
-			addOption("STAGE "+i, function() { FlxG.switchState(new PlayState(i)); } );
+			addOption("Level "+(i+1), function() { FlxG.switchState(new PlayState(i)); } );
 		}
 		
 		updateCursorPos();

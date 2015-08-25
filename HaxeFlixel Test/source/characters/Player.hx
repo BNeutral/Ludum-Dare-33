@@ -82,9 +82,6 @@ class Player extends Attacher
 	{
 		movementUpdate();
 		soundUpdate();
-		if (FlxG.keys.justPressed.ONE) adjustSize(currentSize + 0.1);
-		if (FlxG.keys.justPressed.TWO) adjustSize(currentSize - 0.1);
-		if (FlxG.keys.justPressed.THREE) hurt(100);
 		speedMultiplier = baseSpeed / currentSize;
 		super.update();
 	}

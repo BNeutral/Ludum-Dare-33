@@ -143,6 +143,16 @@ class PlayState extends FlxState
 		counter = new PercentDisplay(Reg.getSlimeNeeded(levelNumber), slimeCanvas);
 		add(counter);
 		
+		if (levelNumber >= 0)
+		{
+			var levelText : FlxText = new FlxText(0, 200, FlxG.width, "Level " + (levelNumber + 1), 64, true);
+			levelText.font = "assets/fonts/DJB Speak Softly.ttf";
+			levelText.alignment = "center";
+			FlxTween.tween(levelText, { y : -200 }, 2, { ease : FlxEase.sineIn, type : FlxTween.ONESHOT } );
+			levelText.color = 0x000000;
+			add(levelText);
+		}
+		
 		loadCharsFromTilemap(tiledMap.getLayer("PCs").tileArray, tiledMap.width, tiledMap.height);
 		
 		FlxG.worldBounds.set(0, 0, tiledMap.width * 40, tiledMap.height * 40);
@@ -185,7 +195,7 @@ class PlayState extends FlxState
 				case 454: // Spike v
 					addHazard(new Spike(x, y, "assets/images/hazards/spike4.png"));
 				case 497: // Exit chest
-					add(new Chest(x, y + 65, layer1, layer2, layer3, stageCollisionExtra, player, counter, wonLevel, 20));
+					add(new Chest(x, y + 65, layer1, layer2, layer3, stageCollisionExtra, player, counter, wonLevel, 100));
 				case 498: // Shy Goblin
 					addEdible(new ShyGoblin(x, y + 40, player));					
 				case 499: // Shield Goblin
