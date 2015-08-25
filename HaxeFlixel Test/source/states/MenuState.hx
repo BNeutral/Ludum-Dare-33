@@ -99,7 +99,11 @@ class MenuState extends FlxState
 			updateCursorPos();
 			FlxG.sound.play("assets/sounds/MenuSelect.mp3");
 		}
-		if (FlxG.keys.justPressed.ENTER) texts[cursorCounter].callback();
+		if (FlxG.keys.justPressed.ENTER) 
+		{
+			FlxG.sound.play("assets/sounds/100%.mp3");
+			texts[cursorCounter].callback();
+		}
 	}
 	
 	private function updateCursorPos() : Void

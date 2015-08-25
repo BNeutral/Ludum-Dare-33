@@ -13,7 +13,6 @@ class Shield extends Item
 	{
 		super(X, Y, "assets/images/items/shield.png", collisionGroup, itemsGroup);
 		type = 1;
-		allowCollisions = FlxObject.RIGHT;
 		detachThreshold = 0.9;
 	}
 	
@@ -31,8 +30,8 @@ class Shield extends Item
 		super.onOverlapItem(otherItem, item);
 		if (otherItem.type == 2) 
 		{
-			if ( (x < owner.x+width/2 && otherItem.x+width > x) ||
-				(x + width > owner.x + width / 2 && otherItem.x < x)) return;
+			if ( (x < owner.x+width/2 && !otherItem.owner.flipX) ||
+				(x + width > owner.x + owner.width / 2 && otherItem.owner.flipX)) return;
 			otherItem.detach();
 		}
 	}
