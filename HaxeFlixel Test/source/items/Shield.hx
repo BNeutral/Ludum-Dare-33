@@ -30,9 +30,10 @@ class Shield extends Item
 		super.onOverlapItem(otherItem, item);
 		if (otherItem.type == 2) 
 		{
-			if ( (x < owner.x+width/2 && !otherItem.owner.flipX) ||
-				(x + width > owner.x + owner.width / 2 && otherItem.owner.flipX)) return;
-			otherItem.detach();
+			// TODO: Fix some day
+			if ( (x < owner.x+width/2 && otherItem.x+width > x) ||
+				(x + width > owner.x + width / 2 && otherItem.x < x)) return;
+ 			otherItem.detach();
 		}
 	}
 	

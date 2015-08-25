@@ -18,7 +18,7 @@ class Owl extends FlxGroup
 		super();
 		add(new FlxSprite(X, Y, "assets/images/owl/owl.png"));
 		add(new FlxSprite(X - 24, Y - 160, "assets/images/owl/speechBubble.png"));
-		var text : FlxText = new FlxText(X, Y - 120, 200, Reg.getOwl(levelNumber), 18, true);
+		var text : FlxText = new FlxText(X, Y - 130, 200, Reg.getOwl(levelNumber), 16, true);
 		text.font = "assets/fonts/DJB Speak Softly.ttf";
 		text.color = 0xFF000000;
 		text.alignment = "center";

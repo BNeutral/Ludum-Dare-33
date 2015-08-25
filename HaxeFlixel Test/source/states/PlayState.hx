@@ -283,7 +283,7 @@ class PlayState extends FlxState
 		}
 		
 		if (FlxG.keys.justPressed.ESCAPE) FlxG.switchState(new MenuState());
-		if (FlxG.keys.justPressed.R) FlxG.switchState(new PlayState());
+		if (FlxG.keys.justPressed.R) FlxG.switchState(new PlayState(levelNumber));
 	}	
 	
 	private function overlapHazard(obj1 : Player, obj2 : Hazard) : Void
