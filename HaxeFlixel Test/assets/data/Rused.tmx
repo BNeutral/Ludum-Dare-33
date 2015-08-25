@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="15" tilewidth="40" tileheight="40" nextobjectid="1">
+ <tileset firstgid="1" name="Tileset" tilewidth="40" tileheight="40" tilecount="540">
+  <image source="../images/tileset.png" width="1800" height="480"/>
+ </tileset>
+ <layer name="Bg1" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt0kWsVVcUBmDcCTLBi0txLRSKBHd3dy/QFoq7M8DdirsTYAQJ7u5SIIURJEgLxeUj4SXkhsfovsE7vD/nG+y9TvY+694VK1ZMYhKTmES/pCAlqUj9lXoa0pKO9F+pZyYLWckWNZ/4XaQ0ZfiFspSjPBU+1ytSicpUoSrVqP65XpNa1KYOdalH/S/uaERjmtCUZjSPgl6CMFPd6E4PetKL3vxKH/rSj9/4nT/ozwD+ZCCDGMwQhjKM4YxgJKMYzRjGMo7xTAhTD0GaqdnMYS7zmM8CFrKIxSxhKX+xjOWsYCWrWM0a1rKO9WxgI5vYzBa2so3t7GBnmHoIwkxFZD8HOMghDnOEoxzjOCc4ySlOc4aznOM8F7jIJS5zhatc4zo3uMkt/uY2d7gbph6CMFMRecRjnvCUf/mPZzznf17wkle85g1vecd7Pnw6KLaHOMQlHvFJQEISkZgkJCUZyWOHp4cgzFREMvhNMpKJH8hMFrKSjezkICe5yE0efiQv+chPAQpSiMIUoSjFKE4JfqIkpfiZ0mH6P4IwUxGp7rwa1KQWtalDXepRnwY0pBGNaUJTmtGcFrSkFa1pQ1va0Z4OdKQTnelCV7qFqZcgzFRoBjp3EIMZEnLHCOuRjGI0Y0LqE6wnMonJTAmpT7WexnRmMJNZYewjCDMVmlXOXc2ab5y/WW0LWyN5Z5f93eyJpL7X/r4o+v5Pic4zFZrzzr7AxW/ccUPtJrcieecf+/e4H0n9gf2HUdhDEGYqSInuM/URHawIMA==
+  </data>
+ </layer>
+ <layer name="Bg2" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt18kNgDAMRFGnAtaiWcthLYe1DUYpAEsRwkjMk/4pFx98iEWIiO7t6ECn9SDkpU4kQ7mznoToeTVqUGs9CHkjmtBsPQgREf3Wgla0WQ9CXoQbJEbJB24RbTe0O1b7dxaoRFXg+99ou6Hdsdq/s0M9GgLfid50AZQNGq0=
+  </data>
+ </layer>
+ <layer name="Bg3" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt1zEKACEMBEDrxP+/9yxOCBbCVSc4A1sYWLBIk9YAOEmM5Eh/s777f18DAAAuUG+Q3Yy71Zv1a2/uU5R+lMxdy9LLpRPNjcyZHv4SAYw=
+  </data>
+ </layer>
+ <layer name="Solid Tiles" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztlUsOgCAMBcH/bdTo/c8m7AwxUsqzVmGStzO0MBasMcaadBaXOSMbo6YUHWgdf0b2FAocFx5UzxqpPnRRuo8RuBaC0n08NWuTy8pIC6r/BR9X+9f2tpc+H9rYQetI+kD1jKB3aW4yvNSXpA9NhPsOg3oPcvuiUH3I9UWB6yN2R0jeH9VH/Awkz6f6+IePnBmnJOyDQsk+cvbACQX/HcJ9ap78D6n1JF1QfRxKew1I
+  </data>
+ </layer>
+ <layer name="PCs" width="100" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt1c0JgDAMBtBm/7GK+9jSARzAgwchNfge5B748tMaANQxY3cHVHCYk0+RB7DcASjlzc4O+/5bZ3L2Gb+lx73gyQVpygsW
+  </data>
+ </layer>
+</map>

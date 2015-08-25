@@ -105,9 +105,9 @@ class PlayState extends FlxState
 		add(bg);
 				
 		var tiledMap : TiledMap;
-		if (data == null || levelNumber != -1) 
+		if (data == null || levelNumber > -1) 
 		{
-			tiledMap = new TiledMap("assets/data/mobtestmap.tmx");
+			tiledMap = new TiledMap(Reg.getLevel(levelNumber));
 		}
 		else
 		{
@@ -243,7 +243,7 @@ class PlayState extends FlxState
 			Reg.wonTheGame = true;
 			FlxG.switchState(new WinState());
 		}
-		FlxG.switchState(new PlayState(levelNumber+1));
+		else FlxG.switchState(new PlayState(levelNumber+1));
 	}
 
 	/**

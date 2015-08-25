@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="15" tilewidth="40" tileheight="40" nextobjectid="1">
+ <tileset firstgid="1" name="Tileset" tilewidth="40" tileheight="40" tilecount="540">
+  <image source="../images/tileset.png" width="1800" height="480"/>
+ </tileset>
+ <layer name="Bg1" width="40" height="15">
+  <data encoding="base64" compression="zlib">
+   eJzt0c1SgWEYxvHnfa2RtsjHYRBa+qzDIMXWx3GI1LacRyS2hMNA0i7lb9q86/e5ZzLGNfNb3vdcM5dSf3HCBTdO4MGp2p9EEMU5YogjgYt/7GRNHgVco4gb3KKEssB/3V0auEMTLdyjjQc8avSS2uUFXfTwij7eMMBQo5/ULnMssMQHVvjEGl8a/aR28RpK+eDHGQIIIoSwYb+f1C5JOqSQRgZZ5HCJK41+0rtU6FJFTaOTNdK7PHHzjI5QP+ldRtyM8Y4JppgJdLXuUrfx75ubDX7wu7s3lTJgwmHq95Pe5ZjDyBaDBEZu
+  </data>
+ </layer>
+ <layer name="Bg2" width="40" height="15">
+  <data encoding="base64" compression="zlib">
+   eJztzqkRACAUA1HK5yyHszpWAgrzXd7Muog4JyIiJ0+B4uc+UaZi9uhWqVH/3A+atMweichrA9UkB40=
+  </data>
+ </layer>
+ <layer name="Bg3" width="40" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMNQBFw5xbiLVjYKRC9DTyCigDgAAhHwAKw==
+  </data>
+ </layer>
+ <layer name="Solid Tiles" width="40" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYMSCDbFgWgNs7oDhwQaGo/s4GBBxbUojd8EAstuYaWwXOcCAYdR9lIBR91EGkN03GMsXdPfBMBMODJJjw2EWK4nqKXEfIYwNGAGxPlReHwkbD4D7YOFDTtjAwpkYveS4jdI6kZCfkdMGtTA+s6lhLwBn3AUY
+  </data>
+ </layer>
+ <layer name="PCs" width="40" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYBg8wGigHTAKRsEwAT8YB9oFo4Da4AMFcXqYEYFB4PNo+sAKvlMQLp+GUJh+HEJuHcoAAFpsCDo=
+  </data>
+ </layer>
+</map>
