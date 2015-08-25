@@ -29,9 +29,18 @@ class MenuState extends FlxState
 	
 	private var menuBack : FlxSprite = new FlxSprite(0, 0, "assets/images/menUI/menuBackdrop.png");
 	private var menuGround : FlxSprite = new FlxSprite(0, 430, "assets/images/menUI/menuGround.png");
-	
 	private var menuChest : FlxSprite = new FlxSprite(395, 265, "assets/images/menUI/menuChest.png");
 	private var menuSlimes : FlxSprite = new FlxSprite(310, 440, "assets/images/menUI/menuSlimes.png");
+	
+	
+	private var winBack : FlxSprite = new FlxSprite(0, 0, "assets/images/menUI/winFog.png");
+	private var winBackSlimegirl : FlxSprite = new FlxSprite(0, 0, "assets/images/menUI/winBase.png");
+	private var winBackTreasure : FlxSprite = new FlxSprite(0, 0, "assets/images/menUI/winTreasure.png");
+	private var winChest : FlxSprite = new FlxSprite(0, 0, "assets/images/menUI/winChest.png");
+	private var winGround : FlxSprite = new FlxSprite(0, 0, "assets/images/menUI/winGround.png");
+	private var winSlimes : FlxSprite = new FlxSprite(0, 0, "assets/images/menUI/winSlimes.png");
+
+	
 	
 	private static inline var yOffset : Int = 50;
 	private static inline var ySpacing : Int = 80;
@@ -44,25 +53,38 @@ class MenuState extends FlxState
 	override public function create():Void
 	{
 		super.create();
-		addOption("NEW GAME", function() { FlxG.switchState(new PlayState()); } );
-		addOption("LEVEL SELECT", function(){ FlxG.switchState(new LevelSelectState()); } );
+		addOption("", function() { FlxG.switchState(new PlayState()); } );
+		addOption("", function(){ FlxG.switchState(new LevelSelectState()); } );
 		//addOption("CONTROLS", function(){ FlxG.switchState(new ControlsState()); } );
-		addOption("CREDITS", function() { FlxG.switchState(new CreditsState()); } );
+		addOption("", function() { FlxG.switchState(new CreditsState()); } );
 		
 		this.bgColor = 0xFFCBF1E4;
 		FlxG.sound.playMusic("assets/music/Compressed/Menu Theme.mp3");
 		
-		add(menuBack);
-		add(menuGround);
+		if (Reg.wonTheGame == false)
+		{
+			add(menuBack);
+			add(menuGround);
+			add(menuChest);
+			add(menuSlimes);
+		}
 		
-		add(logo);
+		if (Reg.wonTheGame == true)
+		{
+			add(winBack);
+			add(winBackSlimegirl);
+			add(winBackTreasure);
+			add(winChest);
+			add(winGround);
+			add(winSlimes);
+		}
 		
+		add(logo);	
 		add(but1);
 		add(but2);
 		add(but3);
 		
-		add (menuChest);
-		add (menuSlimes);
+
 		
 		updateCursorPos();
 		add(cursor);
