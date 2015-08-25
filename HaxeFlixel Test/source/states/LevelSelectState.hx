@@ -17,18 +17,22 @@ class LevelSelectState extends FlxState
 	private var cursor : FlxSprite = new FlxSprite(220, 0, "assets/images/slimeIcon.png");
 	private var cursorCounter : Int = 0;
 	
-	private static inline var yOffset : Int = 300;
-	private static inline var ySpacing : Int = 60;
+	private static inline var yOffset : Int = 0;
+	private static inline var ySpacing : Int = 40;
+	
+	var numberLevels : Int = 0;
 	
 	override public function create():Void
 	{
 		super.create();
-		this.bgColor = 0xFF0000FF;
+		this.bgColor = 0xFF000000;
 		
-		addOption("STAGE 1", function(){ FlxG.switchState(new PlayState()); } );
-		addOption("STAGE 2", function(){ FlxG.switchState(new PlayState()); } );
-		addOption("STAGE 3", function(){ FlxG.switchState(new PlayState()); } );
-		addOption("STAGE 4", function(){ FlxG.switchState(new PlayState()); } );
+		numberLevels = Reg.levels.length;
+		for (i in 0...numberLevels)
+		{
+			addOption("STAGE "+i, function() { FlxG.switchState(new PlayState(i)); } );
+		}
+		
 		updateCursorPos();
 		add(cursor);		
 		FlxTween.angle(cursor, 0, 90, 1, { type : FlxTween.LOOPING, ease : FlxEase.bounceOut } );

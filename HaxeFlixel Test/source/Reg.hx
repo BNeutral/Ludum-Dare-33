@@ -50,7 +50,7 @@ class Reg
 			"assets/data/Leap.tmx",
 			"assets/data/Rused.tmx",
 			"assets/data/Backtrack.tmx",
-			"assets/data/Plantrun.tmx"
+			"assets/data/PlantRun.tmx"
 			];
 	
 	public static var levelMusic:Array<String> = [
