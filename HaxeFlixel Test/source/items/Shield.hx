@@ -3,6 +3,7 @@ package items;
 import flixel.FlxObject;
 import flixel.group.FlxGroup;
 import flixel.group.FlxTypedGroup;
+import flixel.util.FlxCollision;
 import flixel.util.FlxPoint;
 import flixel.FlxSprite;
 
@@ -31,9 +32,7 @@ class Shield extends Item
 		if (otherItem.type == 2) 
 		{
 			// TODO: Fix some day
-			if ( (x < owner.x+width/2 && otherItem.x+width > x) ||
-				(x + width > owner.x + width / 2 && otherItem.x < x)) return;
- 			otherItem.detach();
+			if (FlxCollision.pixelPerfectCheck(otherItem, item)) otherItem.detach();
 		}
 	}
 	
